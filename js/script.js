@@ -126,19 +126,26 @@
         navigation: {
           nextEl: ".swiper-button-next",
           prevEl: ".swiper-button-prev",
+        }, 
+        autoplay: {
+            delay: 2000,
         },
         breakpoints:{
             600:{
                 slidesPerView: 3,
+                slidesPerGroup: 1,
             },
             900:{
                 slidesPerView: 4,
+                slidesPerGroup: 2,
             },
             1200:{
                 slidesPerView: 5,
+                slidesPerGroup: 2,
             },
             1370:{
                 slidesPerView: 5,
+                slidesPerGroup: 2,
             }
         }
     });

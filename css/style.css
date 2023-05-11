@@ -203,17 +203,8 @@
     .dropdown__hidden__item:before{
         content: " - ";
     }
-    #dropdown__item__1{
-        width: 15rem;
-    }
-    #dropdown__item__2{
-        width: 15rem;
-    }
-    #dropdown__item__3{
-        width: 20rem;
-    }
-    #dropdown__item__4{
-        width: 15rem;
+    [id^="dropdown__item"]{
+        width: 17rem;
     }
 
     .dropdown__item{
@@ -683,13 +674,26 @@
         }
     }
     @media (max-width: 1050px) {
+        
+        [id^="dropdown__item"]{
+            width: 100%;
+        }
+        .dropdown__item{
+            text-align: center;
+            font-size: 1.2rem;
+            text-decoration: underline;
+        }
+        .dropdown-menu{
+            position: absolute;
+            left: 0;
+        }
         .wrapper > .social{
             position: absolute;
             top: 0;
             left: 80%;
         }
         *{
-            --topValue: 18rem;
+            --topValue: 24rem;
         }
         :root{
             font-size: 14px;
@@ -713,7 +717,7 @@
             flex-direction: column;
         }
         .sort{
-            width: 85%;
+            width: 80%;
         }
         .nav__button{
             width: 2rem;
@@ -854,9 +858,9 @@
             --topValue: 37rem;
         }
     }
-    @media (max-width: 298px){
+    @media (max-width: 352px){
         *{
-            --topValue: 42rem;
+            --topValue: 43rem;
         }
     }
 /*АДАПТИВ. КОНЕЦ*/
