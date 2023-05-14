@@ -426,7 +426,7 @@ $pathSomewhere = "../";
                 ?>
                 <a href="?<?=$pagesVarPrev?>" class=" <?=$addClassPrev ?>">
                     <button class="nav__btn <?=$pagesVarPrev ?>" method="GET" name="page" >
-                        <<
+                        <img src="../images/arrow.png" alt="" class="pagination__arrow__img pagination__prev__arrow">
                     </button>
                 </a>
 
@@ -478,7 +478,7 @@ $pathSomewhere = "../";
                 
                 <a href="?<?=$pagesVarNext?>"  class=" <?=$addClassNext ?>">
                     <button class="nav__btn <?=$pagesVarNext ?>" method="GET" name="page" >
-                        >>
+                        <img src="../images/arrow.png" alt="" class="pagination__arrow__img pagination__next__arrow">
                     </button>
                 </a>
                 <?php endif;?>

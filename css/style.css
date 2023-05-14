@@ -203,8 +203,17 @@
     .dropdown__hidden__item:before{
         content: " - ";
     }
-    [id^="dropdown__item"]{
-        width: 17rem;
+    #dropdown__item__1{
+        width: 15rem;
+    }
+    #dropdown__item__2{
+        width: 15rem;
+    }
+    #dropdown__item__3{
+        width: 20rem;
+    }
+    #dropdown__item__4{
+        width: 15rem;
     }
 
     .dropdown__item{
@@ -551,11 +560,25 @@
         font-size: 2rem;
         font-weight: bold;
         color: var(--backgroundColor);
+        display: flex;
+        justify-content: center;
     }
-    .nav__btn:hover{
+    .pagination__prev__arrow{
+        transform: rotate(180deg);
+    }
+    .pagination__prev__arrow:hover{
         cursor: pointer;
-        color: #fff;
-        background-color: var(--backgroundColor);
+        transform: scale(1.2) rotate(180deg);
+        transition: 0.2s;
+    }
+    .pagination__next__arrow:hover{
+        cursor: pointer;
+        transform: scale(1.2);
+        transition: 0.2s;
+    }
+    .pagination__arrow__img{
+        width:2rem;
+        transition: 0.2s;
     }
     .disable{
         pointer-events: none;
@@ -674,26 +697,13 @@
         }
     }
     @media (max-width: 1050px) {
-        
-        [id^="dropdown__item"]{
-            width: 100%;
-        }
-        .dropdown__item{
-            text-align: center;
-            font-size: 1.2rem;
-            text-decoration: underline;
-        }
-        .dropdown-menu{
-            position: absolute;
-            left: 0;
-        }
         .wrapper > .social{
             position: absolute;
             top: 0;
             left: 80%;
         }
         *{
-            --topValue: 24rem;
+            --topValue: 18rem;
         }
         :root{
             font-size: 14px;
@@ -717,7 +727,7 @@
             flex-direction: column;
         }
         .sort{
-            width: 80%;
+            width: 85%;
         }
         .nav__button{
             width: 2rem;
@@ -858,9 +868,9 @@
             --topValue: 37rem;
         }
     }
-    @media (max-width: 352px){
+    @media (max-width: 298px){
         *{
-            --topValue: 43rem;
+            --topValue: 42rem;
         }
     }
 /*АДАПТИВ. КОНЕЦ*/
