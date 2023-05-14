@@ -425,18 +425,11 @@ $pathSomewhere = "../";
                     if (!($addClassNext == "disable" && $addClassPrev == "disable")):
                 ?>
                 <a href="?<?=$pagesVarPrev?>" class=" <?=$addClassPrev ?>">
-                    <button class="nav__btn <?=$pagesVarPrev ?>" method="GET" name="page" >
+                    <button class="nav__btn__arrows <?=$pagesVarPrev ?>" method="GET" name="page" >
                         <img src="../images/arrow.png" alt="" class="pagination__arrow__img pagination__prev__arrow">
                     </button>
                 </a>
-
-
-
-
-
-
                 <?php
-                
                 for ($p = (int)$page-1;$p < (int)$page+2; $p++ ):
                         if ($p == -1){
                             $p += 1;
@@ -477,7 +470,7 @@ $pathSomewhere = "../";
 
                 
                 <a href="?<?=$pagesVarNext?>"  class=" <?=$addClassNext ?>">
-                    <button class="nav__btn <?=$pagesVarNext ?>" method="GET" name="page" >
+                    <button class="nav__btn__arrows <?=$pagesVarNext ?>" method="GET" name="page" >
                         <img src="../images/arrow.png" alt="" class="pagination__arrow__img pagination__next__arrow">
                     </button>
                 </a>

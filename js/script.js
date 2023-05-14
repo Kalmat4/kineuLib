@@ -234,10 +234,6 @@
             }else{
                 secondField = document.querySelector('select[name=\'' + field2Id + '\']');
             }
-
-            
-        
-            
             for (let i = 0; i < inputFields.length; i++) {
                 
                 if (inputFields[i].name !== field1Id && inputFields[i].name !== field2Id) {
@@ -251,8 +247,6 @@
                     selectFields[i].disabled = true;
                 }
             }
-            
-        
             if (firstField.value.length < 1 || secondField.value.length < 1){
                 
                 for (let i = 0; i < inputFields.length; i++) { 

@@ -563,6 +563,22 @@
         display: flex;
         justify-content: center;
     }
+    .nav__btn:hover{
+        background-color: var(--backgroundColor);
+        color: #fff;
+        cursor: pointer;
+    }
+    .nav__btn__arrows{
+        padding: 0.5rem 1rem;
+        border-radius: 0.5rem;
+        margin: 0 0.5rem;
+        font-size: 2rem;
+        font-weight: bold;
+        color: var(--backgroundColor);
+        display: flex;
+        justify-content: center;
+
+    }
     .pagination__prev__arrow{
         transform: rotate(180deg);
     }
