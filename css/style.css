@@ -517,15 +517,14 @@
     }
     .annotation > .value:hover{
         text-decoration: underline;
-        
     }
     [id^="page__"]{
         height: 11rem;
         overflow: hidden;
     } 
-    [id^="page__"]:target{
-        height: unset;
-    }
+    [id^="page__"]:hover{
+        cursor: pointer;
+    } 
     
 
     .book__title{
@@ -604,6 +603,15 @@
         opacity: 0.5;
         color: #000;
     }
+
+    .disabledBtn{
+        color: #999999;
+        padding: 1rem;
+        background-color: var(--backgroundColor);
+        margin: 1rem 0;
+        font-size: 1rem;
+    }
+
 
     .sort{
         display: flex;

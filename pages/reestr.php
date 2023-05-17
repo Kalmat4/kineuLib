@@ -35,7 +35,6 @@ $pathSomewhere = "../";
                         } else { 
                             $request = "SELECT * FROM `books`";
                         }      
-                       
                         $isInputFilled = false;
 
                         $fieldArray = [
@@ -255,7 +254,7 @@ $pathSomewhere = "../";
                                             <?php endif;?>
                                             
                                             <?php if (strlen(strip_tags($content['description'])) > 5):?>
-                                                <div class="field annotation">Аннотация: <span class="value" id="<?='page__' . $page__counter?>"><a href="#<?='page__' . $page__counter?>" title = "Нажмите чтобы развернуть"><?=strip_tags($content['description'])?></a></span></div> <!--Аннотация-->
+                                                <div class="field annotation">Аннотация: <span class="value" id="<?='page__' . $page__counter?>" onclick="showDetails('<?='page__' . $page__counter?>')"><?=strip_tags($content['description'])?></span></div> <!--Аннотация-->
                                             <?php endif;?>    
                                             
                                             <?php if (strlen(strip_tags($content['keyWords'])) > 5):?>
@@ -293,9 +292,24 @@ $pathSomewhere = "../";
                                             <?php endif;?>
 
 
-                                            <?php if (strlen(strip_tags($content['link'])) > 5):?>
-                                                <button class="moreInfoBtn"><a href="<?=$content['link']?>">Скачать</a></button> <!--Кнопка скачать-->
-                                            <?php endif;?>
+                                            <?php if (strlen(strip_tags($content['link'])) > 5){
+                                                
+                                                if(file_exists(strip_tags($content['link']))){?>
+                                                    <a href="<?=$content['link']?>">
+                                                        <button class="moreInfoBtn">
+                                                            Скачать
+                                                        </button>
+                                                    </a>
+                                                <?php }else{ ?>
+                                                    <button class="disabledBtn">
+                                                        Скачать
+                                                    </button>
+                                                    <span>Файл недоступен</span>
+                                                <?php } ?>
+                                                
+                                                
+                                                 <!--Кнопка скачать-->
+                                            <?php } ?>
 
 
                                             <?php if (strlen(strip_tags($content['downloads'])) > 0):?>
