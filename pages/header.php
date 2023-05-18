@@ -29,7 +29,6 @@ session_start();
 
 
 <div class="header">
-
     <div class="wrapper">
         <div class="header__logo">
             <a href="<?=$pathToHome?>">
@@ -49,7 +48,13 @@ session_start();
             <a href="https://www.facebook.com/biblioteka.kineu/">
                 <img src="../images/fcLogo.png" alt="fc" class="fc logo">
             </a>
-        </div>       
+        </div>  
+        
+        <div class="language">
+            <img src="<?=$pathToImg?>lang/lang__ru.png" alt="ru" data-google-lang="ru" class="language__img">
+            <img src="<?=$pathToImg?>lang/lang__en.png" alt="en" data-google-lang="en" class="language__img">
+            <img src="<?=$pathToImg?>lang/lang__kz.png" alt="kk" data-google-lang="kk" class="language__img">
+        </div>     
 
     </div>
 
@@ -61,7 +66,7 @@ session_start();
         </div>
         <ul class="nav__bar">
             <div class="nav__item__wrap">
-                <li class="nav__item nav__item__1" >
+                <li class="nav__item nav__item__0" >
                     <a href="../index.php">Главная</a> 
                 </li>
             </div>
