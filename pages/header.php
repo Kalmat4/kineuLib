@@ -49,12 +49,7 @@ session_start();
                 <img src="../images/fcLogo.png" alt="fc" class="fc logo">
             </a>
         </div>  
-        
-        <div class="language">
-            <img src="<?=$pathToImg?>lang/lang__ru.png" alt="ru" data-google-lang="ru" class="language__img">
-            <img src="<?=$pathToImg?>lang/lang__en.png" alt="en" data-google-lang="en" class="language__img">
-            <img src="<?=$pathToImg?>lang/lang__kz.png" alt="kk" data-google-lang="kk" class="language__img">
-        </div>     
+          
 
     </div>
 

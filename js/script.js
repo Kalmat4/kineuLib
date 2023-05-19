@@ -274,3 +274,4 @@
             element.style.transition = '0.4s';
         }
     }
+
