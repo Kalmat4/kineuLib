@@ -274,3 +274,15 @@
             element.style.transition = '0.4s';
         }
     }
+
+
+    function showLangMenu(){
+        let element = document.querySelector('.language__toggle');
+        if (element.style.display == 'flex'){
+            element.style.display = 'none';
+        }else{
+            element.style.display = 'flex';
+        }
+    }
+
+alert( document.cookie );

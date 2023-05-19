@@ -30,6 +30,17 @@ session_start();
 
 <div class="header">
     <div class="wrapper">
+        <div class="language">
+            <div class="dropdown_lang" onclick="showLangMenu()">
+                <span> Выберите язык </span> 
+                <img src="../images/dropdown.png" alt="dropdownImg" class="dropDownImg">
+            </div>
+            <div class="language__toggle">
+                <img src="<?=$pathToImg?>lang/lang__ru.png" alt="ru" data-google-lang="ru" class="language__img">
+                <img src="<?=$pathToImg?>lang/lang__en.png" alt="en" data-google-lang="en" class="language__img">
+                <img src="<?=$pathToImg?>lang/lang__kz.png" alt="kk" data-google-lang="kk" class="language__img">
+            </div> 
+        </div> 
         <div class="header__logo">
             <a href="<?=$pathToHome?>">
                 <img src="<?=$pathToImg . "logo.png"?>" alt="Logo" class="header__logo__img">
@@ -49,12 +60,7 @@ session_start();
                 <img src="../images/fcLogo.png" alt="fc" class="fc logo">
             </a>
         </div>  
-        
-        <div class="language">
-            <img src="<?=$pathToImg?>lang/lang__ru.png" alt="ru" data-google-lang="ru" class="language__img">
-            <img src="<?=$pathToImg?>lang/lang__en.png" alt="en" data-google-lang="en" class="language__img">
-            <img src="<?=$pathToImg?>lang/lang__kz.png" alt="kk" data-google-lang="kk" class="language__img">
-        </div>     
+          
 
     </div>
 
