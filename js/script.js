@@ -284,5 +284,3 @@
             element.style.display = 'flex';
         }
     }
-
-alert( document.cookie );
