@@ -61,8 +61,8 @@ session_start();
             <div class="nav__button__divider"></div>
         </div>
         <ul class="nav__bar">
-            <div class="nav__item__wrap">
-                <li class="nav__item nav__item__0" >
+            <div class="differentNav">
+                <li class="mainpagebtn" >
                     <a href="../index.php">Главная</a> 
                 </li>
             </div>
@@ -112,7 +112,7 @@ session_start();
                                 <a href="<?php echo $pathToPages . "/e-resources.php"?>">Информационные ресурсы</a>
                             </li>
                             <li class="dropdown__item">
-                                <a href="<?php echo $pathToPages . "/reestr.php?page-0"?>">Реестр новых поступлений</a>
+                                <a href="<?php echo $pathToPages . "/reestr.php?auth=e8acc63b1e238f3255c900eed37254b8"?>">Реестр новых поступлений</a>
                             </li>
                             <li class="dropdown__item">
                                 <a href="<?php echo $pathToPages . "/moreResources.php"?>">Ресурсы, направленные на расширение сферы применения казахского языка по рекомендации Министерства образования и науки Республики Казахстан</a>

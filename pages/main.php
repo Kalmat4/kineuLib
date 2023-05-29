@@ -51,7 +51,7 @@ $pathToImg = "images/";
                 Реестр новых поступлений
             </div>
 
-            <form action="pages/reestr.php?page-0">
+            <form action="pages/reestr.php">
                 <button type="submit" class="btnSend">Перейти</button>
             </form>
         </div>

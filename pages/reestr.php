@@ -23,6 +23,9 @@ $pathSomewhere = "../";
         <div class="main__part">
             <div class="books">
                 <?php
+                    if (strlen($_GET['auth']) > 1){
+                        $_SESSION['authToken'] = $_GET['auth'];       
+                    }
                     require 'connect.php';
                     $link = $_SESSION['db'];   
                     error_reporting(0);
@@ -291,26 +294,27 @@ $pathSomewhere = "../";
                                                     <div class="field format">Данные о файле: <span class="value"><?=strip_tags($content['size']) . " ." . strip_tags($content['format'])?></div> <!--Тип и размер файла-->
                                             <?php endif;?>
 
-
-                                            <?php if (strlen(strip_tags($content['link'])) > 5){
-                                                
-                                                if(file_exists(strip_tags($content['link']))){?>
-                                                    <a href="<?=$content['link']?>">
-                                                        <button class="moreInfoBtn">
+                                            <?php if (strlen($_SESSION['authToken']) > 1){ ?>    
+                                                <?php if (strlen(strip_tags($content['link'])) > 5){
+                                                    
+                                                    if(file_exists(strip_tags($content['link']))){?>
+                                                        <a href="<?=$content['link']?>">
+                                                            <button class="moreInfoBtn">
+                                                                Скачать
+                                                            </button>
+                                                        </a>
+                                                    <?php }else{ ?>
+                                                        <button class="disabledBtn">
                                                             Скачать
                                                         </button>
-                                                    </a>
-                                                <?php }else{ ?>
-                                                    <button class="disabledBtn">
-                                                        Скачать
-                                                    </button>
-                                                    <span>Файл недоступен</span>
+                                                        <span>Файл недоступен</span>
+                                                    <?php } ?>
+                                                    
+                                                    
+                                                    <!--Кнопка скачать-->
                                                 <?php } ?>
-                                                
-                                                
-                                                 <!--Кнопка скачать-->
                                             <?php } ?>
-
+                                            
 
                                             <?php if (strlen(strip_tags($content['downloads'])) > 0):?>
                                                 <div class="downloads">Количество скачиваний: <span class="value"><?=strip_tags($content['downloads'])?></span></div> <!--Количество скачиваний-->

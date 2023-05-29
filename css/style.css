@@ -133,12 +133,21 @@ button{
 .nav__item{
     padding: 1.2rem;
 }
-.nav__item__0{
-    text-transform: capitalize;
-}
 .nav__item__wrap{
     display: flex;
     flex-direction: column;
+}
+.differentNav{
+    
+    display: flex;
+    flex-direction: column;
+}
+.mainpagebtn{
+    padding: 1.2rem;
+    text-transform: capitalize;
+}
+.mainpagebtn:hover{
+    cursor: pointer;
 }
 .nav__item:hover{
     cursor: pointer;

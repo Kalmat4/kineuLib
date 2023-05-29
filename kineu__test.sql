@@ -3,8 +3,8 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Май 10 2023 г., 11:21
--- Версия сервера: 5.6.51-log
+-- Время создания: Май 29 2023 г., 10:53
+-- Версия сервера: 8.0.30
 -- Версия PHP: 7.2.34
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
@@ -28,12 +28,12 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `books` (
-  `id` int(11) NOT NULL,
+  `id` int NOT NULL,
   `book__name` varchar(255) NOT NULL,
   `author` varchar(255) NOT NULL,
   `co_author` varchar(255) NOT NULL,
   `izd` varchar(255) NOT NULL,
-  `vid_izd_id` int(11) NOT NULL,
+  `vid_izd_id` int NOT NULL,
   `year` varchar(255) NOT NULL,
   `format` varchar(255) NOT NULL,
   `size` varchar(255) NOT NULL,
@@ -43,13 +43,13 @@ CREATE TABLE `books` (
   `isbn` varchar(255) NOT NULL,
   `bbk` varchar(255) NOT NULL,
   `udk` varchar(255) NOT NULL,
-  `rubric_id` int(11) NOT NULL,
-  `faculty_id` int(11) NOT NULL,
-  `department_id` int(11) NOT NULL,
-  `spec_id` int(11) NOT NULL,
+  `rubric_id` int NOT NULL,
+  `faculty_id` int NOT NULL,
+  `department_id` int NOT NULL,
+  `spec_id` int NOT NULL,
   `img` text NOT NULL,
   `link` text NOT NULL,
-  `downloads` int(11) NOT NULL
+  `downloads` int NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=cp1251;
 
 --
@@ -158,9 +158,9 @@ INSERT INTO `books` (`id`, `book__name`, `author`, `co_author`, `izd`, `vid_izd_
 --
 
 CREATE TABLE `department` (
-  `id` int(11) NOT NULL,
+  `id` int NOT NULL,
   `title` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
 --
 -- Дамп данных таблицы `department`
@@ -181,9 +181,9 @@ INSERT INTO `department` (`id`, `title`) VALUES
 --
 
 CREATE TABLE `edition` (
-  `id` int(11) NOT NULL,
+  `id` int NOT NULL,
   `title` varchar(255) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
 --
 -- Дамп данных таблицы `edition`
@@ -213,9 +213,9 @@ INSERT INTO `edition` (`id`, `title`) VALUES
 --
 
 CREATE TABLE `faculty` (
-  `id` int(11) NOT NULL,
+  `id` int NOT NULL,
   `title` varchar(255) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
 --
 -- Дамп данных таблицы `faculty`
@@ -232,10 +232,10 @@ INSERT INTO `faculty` (`id`, `title`) VALUES
 --
 
 CREATE TABLE `moreResource` (
-  `id` int(11) NOT NULL,
+  `id` int NOT NULL,
   `link` varchar(255) NOT NULL,
   `img` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
 --
 -- Дамп данных таблицы `moreResource`
@@ -260,12 +260,12 @@ INSERT INTO `moreResource` (`id`, `link`, `img`) VALUES
 --
 
 CREATE TABLE `pubList` (
-  `id` int(11) NOT NULL,
+  `id` int NOT NULL,
   `pubIndex` varchar(255) NOT NULL,
   `pubName` varchar(255) NOT NULL,
-  `months` int(11) NOT NULL,
-  `sets` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `months` int NOT NULL,
+  `sets` int NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
 --
 -- Дамп данных таблицы `pubList`
@@ -302,10 +302,10 @@ INSERT INTO `pubList` (`id`, `pubIndex`, `pubName`, `months`, `sets`) VALUES
 --
 
 CREATE TABLE `resources` (
-  `id` int(11) NOT NULL,
+  `id` int NOT NULL,
   `link` varchar(255) DEFAULT NULL,
   `img` varchar(255) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
 --
 -- Дамп данных таблицы `resources`
@@ -354,9 +354,9 @@ INSERT INTO `resources` (`id`, `link`, `img`) VALUES
 --
 
 CREATE TABLE `rubric` (
-  `id` int(11) NOT NULL,
+  `id` int NOT NULL,
   `title` varchar(255) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
 --
 -- Дамп данных таблицы `rubric`
@@ -500,10 +500,10 @@ INSERT INTO `rubric` (`id`, `title`) VALUES
 --
 
 CREATE TABLE `spec` (
-  `id` int(11) NOT NULL,
+  `id` int NOT NULL,
   `code` varchar(255) DEFAULT NULL,
   `title` varchar(255) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
 --
 -- Дамп данных таблицы `spec`
@@ -599,55 +599,55 @@ ALTER TABLE `spec`
 -- AUTO_INCREMENT для таблицы `books`
 --
 ALTER TABLE `books`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=95;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=95;
 
 --
 -- AUTO_INCREMENT для таблицы `department`
 --
 ALTER TABLE `department`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT для таблицы `edition`
 --
 ALTER TABLE `edition`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT для таблицы `faculty`
 --
 ALTER TABLE `faculty`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT для таблицы `moreResource`
 --
 ALTER TABLE `moreResource`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT для таблицы `pubList`
 --
 ALTER TABLE `pubList`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT для таблицы `resources`
 --
 ALTER TABLE `resources`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
 
 --
 -- AUTO_INCREMENT для таблицы `rubric`
 --
 ALTER TABLE `rubric`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=130;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=130;
 
 --
 -- AUTO_INCREMENT для таблицы `spec`
 --
 ALTER TABLE `spec`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
