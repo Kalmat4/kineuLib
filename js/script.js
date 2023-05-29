@@ -290,20 +290,52 @@ function showLangMenu(){
 
 
 
-let navItem ;
+let navItem;
 let wrapper;
 
 
 
 
-let nav;
+let nav = document.querySelector(".dropdown-menu");
 let isOpenMenu = false;
+<<<<<<< Updated upstream
 let targetItem;
 let getStyle; 
 let dropdownTop; 
 let dropdownHeight; 
 let borderBottom = 1000; 
 document.addEventListener('mousemove', function(e){
+=======
+
+
+let dropdownWidth;
+let dropdownHeight;
+        
+let dropdownTop;
+let dropdownLeft;
+        
+
+let borderLeft;
+let borderRight;
+let borderTop;
+let borderBottom;
+
+document.addEventListener('mouseover', function(e){
+    
+    function calculatingCoordinates(){
+        dropdownWidth = nav.clientWidth;
+        dropdownHeight = nav.clientHeight;
+        
+        dropdownTop = getComputedStyle(nav).top.slice(0, getComputedStyle(nav).top.length-2);
+        dropdownLeft = getComputedStyle(nav).left.slice(0, getComputedStyle(nav).left.length-2);
+
+        borderLeft = dropdownLeft;
+        borderRight = dropdownLeft + dropdownWidth;
+        borderTop = dropdownTop;
+        borderBottom = dropdownTop + dropdownHeight;
+    }
+
+>>>>>>> Stashed changes
 
     navItem = document.querySelector('.navigation').clientHeight;
     wrapper = document.querySelector('.wrapper').clientHeight;
@@ -312,6 +344,7 @@ document.addEventListener('mousemove', function(e){
     
     if (!(isOpenMenu)){
         nav = document.querySelector("." + String(e.target.parentElement.classList[1]) + " > .dropdown-menu"); 
+        calculatingCoordinates();
     }
     if(String(e.target.classList).indexOf('nav__item') >= 0){
         
@@ -325,6 +358,7 @@ document.addEventListener('mousemove', function(e){
                 nav = document.querySelector("." + String(e.target.parentElement.classList[1]) + " > .dropdown-menu"); 
                 nav.style.top = count + 'px';
                 isOpenMenu = true;
+                calculatingCoordinates();
             }
             getStyle = window.getComputedStyle(targetItem);
             
@@ -341,6 +375,13 @@ document.addEventListener('mousemove', function(e){
             nav.style.top = '0px';
             isOpenMenu = false;
         }
+<<<<<<< Updated upstream
+=======
+
+    }else if(e.clientX < borderLeft || e.clientX > borderRight || e.clientY < borderTop || e.clientY > borderBottom){
+        alert('you out');
+>>>>>>> Stashed changes
     }
+
 })
 
