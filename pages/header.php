@@ -32,6 +32,7 @@ session_start();
 
 <div class="header">
     <div class="wrapper">
+
         <div class="header__logo">
             <a href="<?=$pathToHome?>">
                 <img src="<?=$pathToImg . "logo.png"?>" alt="Logo" class="header__logo__img">
@@ -76,7 +77,7 @@ session_start();
                 <div id="dropdown__item__1" class="dropdown-menu">
                     <ul class="dropdown__list">
                         <li class="dropdown__item">
-                            <a href="<?php echo $pathToPages . "/mission.php"?>">Миссия. Задачи. Приоритетные направления</a>
+                            <a class="dropLink" href="<?php echo $pathToPages . "/mission.php"?>">Миссия. Задачи. Приоритетные направления</a>
                         </li>
                         <li class="dropdown__item">
                             <a href="<?php echo $pathToPages . "/contacts.php"?>">Контакты. Режим работы</a>
