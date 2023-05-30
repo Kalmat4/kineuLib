@@ -298,11 +298,9 @@ let wrapper;
 
 let nav;
 let isOpenMenu = false;
-let targetItem;
-let getStyle; 
-let dropdownTop; 
-let dropdownHeight; 
+let targetItem, getStyle, dropdownTop, dropdownHeight, dropdownWidth, dropdownLeft; 
 let borderBottom = 1000; 
+let borderLeft, borderRight, borderTop;
 document.addEventListener('mousemove', function(e){
 
     navItem = document.querySelector('.navigation').clientHeight;
@@ -332,11 +330,17 @@ document.addEventListener('mousemove', function(e){
             dropdownTop = +getStyle.getPropertyValue('top').replace('px','');
             dropdownHeight = +getStyle.getPropertyValue('height').replace('px','');
             dropdownHeight += (dropdownPadding * 2);
+            dropdownWidth = +getStyle.getPropertyValue('width').replace('px','');
+            dropdownLeft = +getStyle.getPropertyValue('left').replace('px','');
+            dropdownWidth += (dropdownPadding * 2); 
             borderBottom = dropdownTop + dropdownHeight;
+            borderTop = dropdownTop;
+            borderLeft = dropdownLeft;
+            borderRight = dropdownLeft + dropdownWidth;
                 
         }
         
-    }else if(e.clientY > borderBottom){
+    }else if(!((e.clientY < borderBottom && e.clientY > borderTop) && (e.clientX > borderLeft && e.clientX < borderRight))){
         if (isOpenMenu){
             nav.style.top = '0px';
             isOpenMenu = false;
@@ -344,3 +348,15 @@ document.addEventListener('mousemove', function(e){
     }
 })
 
+
+function switchEye(){
+    let input = document.querySelector('.passInput');
+    let eye = document.querySelector('.eye');
+    if (input.getAttribute('type') == 'password'){
+        eye.setAttribute('src', '../images/closedEye.png');
+        input.setAttribute('type', 'text');
+    }else{
+        eye.setAttribute('src', '../images/eye.png');
+        input.setAttribute('type', 'password');
+    }
+}

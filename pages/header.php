@@ -24,6 +24,9 @@ session_start();
 
     $pathOutside = "../";
     
+    if (strlen($_GET['auth']) > 1){
+        $_SESSION['authToken'] = $_GET['auth'];       
+    }
 
 ?>
 
@@ -112,7 +115,7 @@ session_start();
                                 <a href="<?php echo $pathToPages . "/e-resources.php"?>">Информационные ресурсы</a>
                             </li>
                             <li class="dropdown__item">
-                                <a href="<?php echo $pathToPages . "/reestr.php?auth=e8acc63b1e238f3255c900eed37254b8"?>">Реестр новых поступлений</a>
+                                <a href="<?php echo $pathToPages . "/reestr.php"?>">Реестр новых поступлений</a>
                             </li>
                             <li class="dropdown__item">
                                 <a href="<?php echo $pathToPages . "/moreResources.php"?>">Ресурсы, направленные на расширение сферы применения казахского языка по рекомендации Министерства образования и науки Республики Казахстан</a>

@@ -23,9 +23,7 @@ $pathSomewhere = "../";
         <div class="main__part">
             <div class="books">
                 <?php
-                    if (strlen($_GET['auth']) > 1){
-                        $_SESSION['authToken'] = $_GET['auth'];       
-                    }
+                    
                     require 'connect.php';
                     $link = $_SESSION['db'];   
                     error_reporting(0);
@@ -169,7 +167,7 @@ $pathSomewhere = "../";
                             $_SESSION['sql'] = $request;
                             echo "<br/>" . $sortText . "<br/>";
                         }else{
-                            $sql = mysqli_query($link, "SELECT * FROM `books`");
+                            $sql = mysqli_query($link, "SELECT * FROM `materials` ORDER BY `id` DESC");
                         }
 
 
@@ -240,13 +238,13 @@ $pathSomewhere = "../";
                                                 <div class="field book__title"><span><?=strip_tags($content['book__name'])?></div> <!--Заголовок-->
                                             <?php endif;?>
 
-                                            
-                                            <?php if (strlen(strip_tags($content['vid_izd_id'])) > 5):?>
-                                                <div class="field edition__type">Вид издания: <span class="value"><?=strip_tags($content['vid_izd'])?></span></div> <!--Вид издания-->
-                                            <?php endif;?>
-                                            
                                             <?php if (strlen(strip_tags($content['izd'])) > 5):?>
                                                 <div class="field edition">Издательство: <span class="value"><?=strip_tags($content['izd'])?></span></div> <!--Издательство-->
+                                            <?php endif;?>
+                                            
+                                            <?php if (strlen(strip_tags($content['vid_izd_id'])) > 0):?>
+
+                                                <div class="field edition__type">Вид издания: <span class="value"><?=strip_tags($content['vid_izd_id'])?></span></div> <!--Вид издания-->
                                             <?php endif;?>
                                             
                                             <?php if (strlen(strip_tags($content['author'])) > 5):?>
@@ -277,21 +275,21 @@ $pathSomewhere = "../";
                                             <?php endif;?>   
                                             
                                             <?php if (strlen(strip_tags($content['faculty_id'])) > 5):?>
-                                                <div class="field faculty">Факультет: <span class="value"><?=strip_tags($content['faculty'])?></span></div> <!--Факультет-->
+                                                <div class="field faculty">Факультет: <span class="value"><?=strip_tags($content['faculty_id'])?></span></div> <!--Факультет-->
                                             <?php endif;?>
 
 
                                             <?php if (strlen(strip_tags($content['department_id'])) > 5):?>
-                                                <div class="field department">Кафедра: <span class="value"><?=strip_tags($content['department'])?></span></div> <!--Кафедра-->
+                                                <div class="field department">Кафедра: <span class="value"><?=strip_tags($content['department_id'])?></span></div> <!--Кафедра-->
                                             <?php endif;?>
 
 
                                             <?php if (strlen(strip_tags($content['spec_id'])) > 5):?>
-                                                <div class="field speciality">Специальность: <span class="value"><?=strip_tags($content['speciality'])?></span></div> <!--Специальность-->
+                                                <div class="field speciality">Специальность: <span class="value"><?=strip_tags($content['spec_id'])?></span></div> <!--Специальность-->
                                             <?php endif;?>
 
-                                            <?php if (strlen(strip_tags($content['size'])) > 1 && strlen(strip_tags($content['format'])) > 1):?>
-                                                    <div class="field format">Данные о файле: <span class="value"><?=strip_tags($content['size']) . " ." . strip_tags($content['format'])?></div> <!--Тип и размер файла-->
+                                            <?php if (strlen(strip_tags($content['format'])) > 1):?>
+                                                    <div class="field format">Данные о файле: <span class="value"><?=strip_tags($content['format'])?></div> <!--Тип файла-->
                                             <?php endif;?>
 
                                             <?php if (strlen($_SESSION['authToken']) > 1){ ?>    
