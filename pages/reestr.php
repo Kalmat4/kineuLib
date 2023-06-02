@@ -29,12 +29,12 @@ $pathSomewhere = "../";
                     error_reporting(0);
                         if(strlen($_SESSION['sql']) > 1){
                             if ($_SERVER['REQUEST_URI'] == '/pages/reestr.php?clear'){
-                                $request = "SELECT * FROM `books`";
+                                $request = "SELECT * FROM `materials`";
                             }else{
                                 $request = $_SESSION['sql'];   
                             }
                         } else { 
-                            $request = "SELECT * FROM `books`";
+                            $request = "SELECT * FROM `materials`";
                         }      
                         $isInputFilled = false;
 
@@ -129,7 +129,7 @@ $pathSomewhere = "../";
                         }
                         $sortText = 'Сортировка по полю <b>«';
                         if (strlen($secondFieldInput) >= 1 && strlen($firstFieldInput) >= 1){
-                            $request = "SELECT * FROM `books` WHERE `" . $firstFieldName . "` LIKE '%" . $firstFieldInput . "%' AND `" . $secondFieldName . "` LIKE '%" . $secondFieldInput . "%'";
+                            $request = "SELECT * FROM `materials` WHERE `" . $firstFieldName . "` LIKE '%" . $firstFieldInput . "%' AND `" . $secondFieldName . "` LIKE '%" . $secondFieldInput . "%'";
                             $isInputFilled = true;
 
 
@@ -149,7 +149,7 @@ $pathSomewhere = "../";
                             }
                             $sortText .= $firstClearName . "»</b> равное значению <b>«" . $firstFieldInput . "»</b> и по полю <b>«" . $secondClearName . "»</b> равное значению <b>«" . $secondFieldInput . "»</b>";
                         }else if (strlen($firstFieldInput) >= 1){
-                            $request = "SELECT * FROM `books` WHERE `" . $firstFieldName . "` LIKE '%" . $firstFieldInput . "%'";
+                            $request = "SELECT * FROM `materials` WHERE `" . $firstFieldName . "` LIKE '%" . $firstFieldInput . "%'";
                             $isInputFilled = true;
                             $clearName = getClearName($firstFieldName);
 
@@ -411,7 +411,7 @@ $pathSomewhere = "../";
                 </form>
                 <?php
                     if (isset($_GET['clear'])){
-                        $_SESSION['sql'] = "SELECT * FROM `books`";
+                        $_SESSION['sql'] = "SELECT * FROM `materials`";
                     }
                 
                 ?>

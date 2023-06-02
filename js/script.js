@@ -360,3 +360,23 @@ function switchEye(){
         input.setAttribute('type', 'password');
     }
 }
+
+let eye = document.querySelector('.eye');
+let input = document.querySelector('.passInput');
+let getInputStyle = window.getComputedStyle(input);
+let inputWidth = +getInputStyle.getPropertyValue('width').replace('px','');
+let inputPadding = getInputStyle.getPropertyValue('padding').replace('1','').replace('px','');
+inputWidth += +inputPadding.replace('px','')*2-15
+eye.style.left = inputWidth + 'px';
+let prevWidth;
+let prevLeft;
+window.addEventListener('resize', function(event) {
+    
+    eye = document.querySelector('.eye');
+    input = document.querySelector('.passInput');
+    getInputStyle = window.getComputedStyle(input);
+    inputWidth = +getInputStyle.getPropertyValue('width').replace('px','');
+    inputPadding = getInputStyle.getPropertyValue('padding').replace('1','').replace('px','');
+    inputWidth += +inputPadding.replace('px','')*2-15
+    eye.style.left = inputWidth + 'px';
+}, true);

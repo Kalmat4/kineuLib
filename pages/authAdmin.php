@@ -25,7 +25,7 @@ require "header.php";
         
         while ($check = mysqli_fetch_assoc($sqlAuth)){
             if ($check['login'] == $login && $check['password'] == $password){
-                echo "<script> location.href='adminForm.php'; </script>";
+                echo "<script> location.href='adminForm.php?page-0'; </script>";
                 exit;
             }else{
                 $status = 'Вы ввели неправильный логин или пароль!';
