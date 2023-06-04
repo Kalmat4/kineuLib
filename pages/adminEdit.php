@@ -211,8 +211,9 @@ require "header.php";
             $sqlUpdate = "UPDATE `materials` SET " . $book__name . $author . $co_author . $izd . $vid_izd . $description . $keyWords . $format . $size . $isbn . $bbk . $udk . $faculty . $department . $spec . $linkToDownload . $downloads . " WHERE `materials`.`id` = " . $id;
             $dotPoint = strpos($sqlUpdate,'WHERE');
             $sqlUpdate[$dotPoint-3] = " ";
-
+            
             mysqli_query($link, $sqlUpdate);
+            echo "<script> location.href='adminForm.php?page-0'; </script>";
 
         }
         

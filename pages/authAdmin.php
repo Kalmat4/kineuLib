@@ -18,6 +18,7 @@ require "header.php";
 
     $sqlAuth = mysqli_query($link,'SELECT * FROM `admin`');
     
+    
     $login = $_POST['login'];
     $password = $_POST['pass'];
 
