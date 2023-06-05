@@ -513,15 +513,8 @@ table{
 }
 .annotation > .value:hover{
     text-decoration: underline;
-}
-[id^="page__"]{
-    height: 11rem;
-    overflow: hidden;
-} 
-[id^="page__"]:hover{
     cursor: pointer;
-} 
-
+}
 
 .book__title{
     font-size: 2rem;
@@ -1101,5 +1094,51 @@ label{
     background-color: var(--backgroundColor);
     color: var(--actualBackgroundColor);
     cursor: pointer;
+}
+.hiddendialog{
+    display: none !important;
+}
+.msgdialog{
+    position: absolute;
+    top: 20%;
+    left: 32%;
+    border: 1px solid var(--backgroundColor);
+    padding: 3rem;
+    border-radius: 1rem;
+    background-color: var(--actualBackgroundColor);
+    color: var(--backgroundColor);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.msgbtns{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+.msgbtn{
+    border: 1px solid var(--backgroundColor);
+    padding: 1rem;
+}
+.msgbtn:hover{
+    border: 1px solid var(--backgroundColor);
+    color:var(--actualBackgroundColor);
+    background-color: var(--backgroundColor);
+}
+.addBook{
+    margin: 1rem auto;
+    display: flex;
+    justify-content: center;
+}
+.addBook > a{
+    border: 1px solid var(--backgroundColor);
+    padding: 1rem;
+    background-color: var(--backgroundColor);
+    color:var(--actualBackgroundColor);
+}
+.addBook > a:hover{
+    border: 1px solid var(--backgroundColor);
+    color:var(--fontColor);
+    background-color: var(--actualBackgroundColor);
 }
 /*ПАНЕЛЬ АДМИНИСТРАТОРА. КОНЕЦ*/

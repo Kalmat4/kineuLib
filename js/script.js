@@ -266,19 +266,6 @@ function disableFields(field1Id = '', field2Id = '') {
   }
 
 
-function showDetails(param){
-    let element = document.querySelector('#' + param);
-    if (element.style.height == '11rem' || element.style.height.length < 1){
-        element.style.height = 'unset';
-        element.style.transition = '0.4s';
-    }else{
-        element.style.height = '11rem';
-        element.style.overflow = 'hidden';
-        element.style.transition = '0.4s';
-    }
-}
-
-
 function showLangMenu(){
     let element = document.querySelector('.language__toggle');
     if (element.style.display == 'flex'){
@@ -349,34 +336,54 @@ document.addEventListener('mousemove', function(e){
 })
 
 
-function switchEye(){
-    let input = document.querySelector('.passInput');
-    let eye = document.querySelector('.eye');
-    if (input.getAttribute('type') == 'password'){
-        eye.setAttribute('src', '../images/closedEye.png');
-        input.setAttribute('type', 'text');
+let urlPage = location.href;
+let pathName = '/pages/adminForm.php';
+
+let dialog = document.querySelector('.msgdialog');
+if (pathName == location.pathname){
+    if (urlPage.includes('?bookId')){
+        dialog.classList.remove('hiddendialog');
     }else{
-        eye.setAttribute('src', '../images/eye.png');
-        input.setAttribute('type', 'password');
+        dialog.classList.add('hiddendialog');
     }
+    
 }
 
-let eye = document.querySelector('.eye');
-let input = document.querySelector('.passInput');
-let getInputStyle = window.getComputedStyle(input);
-let inputWidth = +getInputStyle.getPropertyValue('width').replace('px','');
-let inputPadding = getInputStyle.getPropertyValue('padding').replace('1','').replace('px','');
-inputWidth += +inputPadding.replace('px','')*2-15
-eye.style.left = inputWidth + 'px';
-let prevWidth;
-let prevLeft;
-window.addEventListener('resize', function(event) {
-    
-    eye = document.querySelector('.eye');
-    input = document.querySelector('.passInput');
-    getInputStyle = window.getComputedStyle(input);
-    inputWidth = +getInputStyle.getPropertyValue('width').replace('px','');
-    inputPadding = getInputStyle.getPropertyValue('padding').replace('1','').replace('px','');
+
+let pathNameAuth = '/pages/authAdmin.php';
+
+if (pathNameAuth == location.pathname){
+
+    function switchEye(){
+        let input = document.querySelector('.passInput');
+        let eye = document.querySelector('.eye');
+        if (input.getAttribute('type') == 'password'){
+            eye.setAttribute('src', '../images/closedEye.png');
+            input.setAttribute('type', 'text');
+        }else{
+            eye.setAttribute('src', '../images/eye.png');
+            input.setAttribute('type', 'password');
+        }
+    }
+
+    let eye = document.querySelector('.eye');
+    let input = document.querySelector('.passInput');
+    let getInputStyle = window.getComputedStyle(input);
+    let inputWidth = +getInputStyle.getPropertyValue('width').replace('px','');
+    let inputPadding = getInputStyle.getPropertyValue('padding').replace('1','').replace('px','');
     inputWidth += +inputPadding.replace('px','')*2-15
     eye.style.left = inputWidth + 'px';
-}, true);
+    let prevWidth;
+    let prevLeft;
+    window.addEventListener('resize', function(event) {
+        
+        eye = document.querySelector('.eye');
+        input = document.querySelector('.passInput');
+        getInputStyle = window.getComputedStyle(input);
+        inputWidth = +getInputStyle.getPropertyValue('width').replace('px','');
+        inputPadding = getInputStyle.getPropertyValue('padding').replace('1','').replace('px','');
+        inputWidth += +inputPadding.replace('px','')*2-15
+        eye.style.left = inputWidth + 'px';
+    }, true);
+
+}

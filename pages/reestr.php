@@ -26,7 +26,7 @@ $pathSomewhere = "../";
                     
                     require 'connect.php';
                     $link = $_SESSION['db'];   
-                    error_reporting(0);
+                    // error_reporting(0);
                         if(strlen($_SESSION['sql']) > 1){
                             if ($_SERVER['REQUEST_URI'] == '/pages/reestr.php?clear'){
                                 $request = "SELECT * FROM `materials`";
@@ -167,7 +167,7 @@ $pathSomewhere = "../";
                             $_SESSION['sql'] = $request;
                             echo "<br/>" . $sortText . "<br/>";
                         }else{
-                            $sql = mysqli_query($link, "SELECT * FROM `materials` ORDER BY `id` DESC");
+                            $sql = mysqli_query($link, "SELECT * FROM `materials`");
                         }
 
 
@@ -244,7 +244,21 @@ $pathSomewhere = "../";
                                             
                                             <?php if (strlen(strip_tags($content['vid_izd_id'])) > 0):?>
 
-                                                <div class="field edition__type">Вид издания: <span class="value"><?=strip_tags($content['vid_izd_id'])?></span></div> <!--Вид издания-->
+                                                <div class="field edition__type">Вид издания: 
+                                                    <span class="value">
+                                                    <?php 
+                                                        $link = $_SESSION['db'];  
+                                                        $id = strip_tags($content['vid_izd_id']);
+                                                        $id = (int)$id;
+                                                        $facultySQL = mysqli_query($link, "SELECT * FROM `edition` WHERE `id` = $id");
+                                                        
+                                                        while ($contentFac = mysqli_fetch_assoc($facultySQL)){
+                                                            echo $contentFac['title'];
+                                                        }
+                                                        ?>
+                                                    </span>
+                                                </div> 
+
                                             <?php endif;?>
                                             
                                             <?php if (strlen(strip_tags($content['author'])) > 5):?>
@@ -255,7 +269,7 @@ $pathSomewhere = "../";
                                             <?php endif;?>
                                             
                                             <?php if (strlen(strip_tags($content['description'])) > 5):?>
-                                                <div class="field annotation">Аннотация: <span class="value" id="<?='page__' . $page__counter?>" onclick="showDetails('<?='page__' . $page__counter?>')"><?=strip_tags($content['description'])?></span></div> <!--Аннотация-->
+                                                <div class="field annotation">Аннотация: <span class="value"><?=strip_tags($content['description'])?></span></div> <!--Аннотация-->
                                             <?php endif;?>    
                                             
                                             <?php if (strlen(strip_tags($content['keyWords'])) > 5):?>
@@ -274,22 +288,61 @@ $pathSomewhere = "../";
                                                 <div class="field UDK">УДК: </span><span class="value"><?=strip_tags($content['udk'])?></span></div> <!--УДК-->
                                             <?php endif;?>   
                                             
-                                            <?php if (strlen(strip_tags($content['faculty_id'])) > 5):?>
-                                                <div class="field faculty">Факультет: <span class="value"><?=strip_tags($content['faculty_id'])?></span></div> <!--Факультет-->
+                                            <?php if (strlen(strip_tags($content['faculty_id'])) >= 1):?>
+                                                <div class="field faculty">Факультет: 
+                                                    <span class="value">
+                                                        <?php 
+                                                        $link = $_SESSION['db'];  
+                                                        $id = strip_tags($content['faculty_id']);
+                                                        $id = (int)$id;
+                                                        $facultySQL = mysqli_query($link, "SELECT * FROM `faculty` WHERE `id` = $id");
+                                                        
+                                                        while ($contentFac = mysqli_fetch_assoc($facultySQL)){
+                                                            echo $contentFac['title'];
+                                                        }
+                                                        ?>
+                                                    </span>
+                                                </div> <!--Факультет-->
                                             <?php endif;?>
 
 
-                                            <?php if (strlen(strip_tags($content['department_id'])) > 5):?>
-                                                <div class="field department">Кафедра: <span class="value"><?=strip_tags($content['department_id'])?></span></div> <!--Кафедра-->
+                                            <?php if (strlen(strip_tags($content['department_id'])) >= 1):?>
+                                                <div class="field department">Кафедра: 
+                                                    <span class="value">
+                                                    <?php 
+                                                        $link = $_SESSION['db'];  
+                                                        $id = strip_tags($content['department_id']);
+                                                        $id = (int)$id;
+                                                        $facultySQL = mysqli_query($link, "SELECT * FROM `department` WHERE `id` = $id");
+                                                        
+                                                        while ($contentFac = mysqli_fetch_assoc($facultySQL)){
+                                                            echo $contentFac['title'];
+                                                        }
+                                                        ?>
+                                                    </span>
+                                                </div> <!--Кафедра-->
                                             <?php endif;?>
 
 
-                                            <?php if (strlen(strip_tags($content['spec_id'])) > 5):?>
-                                                <div class="field speciality">Специальность: <span class="value"><?=strip_tags($content['spec_id'])?></span></div> <!--Специальность-->
+                                            <?php if (strlen(strip_tags($content['spec_id'])) >= 1):?>
+                                                <div class="field speciality">Специальность: 
+                                                    <span class="value">
+                                                    <?php 
+                                                        $link = $_SESSION['db'];  
+                                                        $id = strip_tags($content['spec_id']);
+                                                        $id = (int)$id;
+                                                        $facultySQL = mysqli_query($link, "SELECT * FROM `spec` WHERE `id` = $id");
+                                                        
+                                                        while ($contentFac = mysqli_fetch_assoc($facultySQL)){
+                                                            echo $contentFac['title'];
+                                                        }
+                                                        ?>
+                                                    </span>
+                                                </div> 
                                             <?php endif;?>
 
-                                            <?php if (strlen(strip_tags($content['format'])) > 1):?>
-                                                    <div class="field format">Данные о файле: <span class="value"><?=strip_tags($content['format'])?></div> <!--Тип файла-->
+                                            <?php if (strlen(strip_tags($content['format'])) > 1 && strlen(strip_tags($content['format']) > 1)):?>
+                                                    <div class="field format">Данные о файле: <span class="value">Формат: <?=strip_tags($content['format'])?>, Размер: <?=strip_tags($content['size'])?></div> <!--Тип файла-->
                                             <?php endif;?>
 
                                             <?php if (strlen($_SESSION['authToken']) > 1){ ?>    

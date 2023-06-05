@@ -21,6 +21,13 @@ require "header.php";
     </p>
    
     <div class="table-wrap">
+        <div class="msgdialog hiddendialog">
+            <h1>Вы уверены что хотите удалить одну запись?</h1>
+            <div class="msgbtns">
+                <a href="?confirmBookDelete=0" class="msgbtn cancelBtn">Отмена</a>
+                <a href="?confirmBookDelete=1" class="msgbtn yesBtn">Да</a>
+            </div>
+        </div>
             <table>
                 <tr>
                     <?php
@@ -28,18 +35,22 @@ require "header.php";
                         error_reporting(0);
                         $link = $_SESSION['db'];
                         $sql = mysqli_query($link, "SELECT * FROM `materials`");
-                        $contentPlus = mysqli_fetch_assoc($sql);
                         
-                            echo "<th class='th'>ID</th>";
-                            if (strlen($contentPlus['date']) > 1){
-                                echo "<th class='th'>Дата</th>";   
-                            }
-                            if (strlen($contentPlus['book__name']) > 1){
-                                echo "<th class='th'>Название книги</th>";   
-                            }
-                            echo "<th class='th'></th>";   
+                        echo "<th class='th'>ID</th>";
+                        echo "<th class='th'>Дата</th>";   
+                        echo "<th class='th'>Название книги</th>";   
+                        echo "<th class='th'></th>";  
 
-                        
+                        if (strlen($_GET['bookId']) > 0){
+                            $_SESSION['bookId'] = $_GET['bookId'];
+                        }
+
+                        if ($_GET['confirmBookDelete'] == 1){
+                            $delSql = 'DELETE FROM `materials` WHERE `id` = ' . $_SESSION['bookId'];
+                            mysqli_query($link, $delSql);
+                        }else{
+                            header('Location: adminForm.php');
+                        }   
                     
                     ?>
                 </tr>
@@ -52,7 +63,7 @@ require "header.php";
 
                         $products = mysqli_num_rows($sql);
                                     
-                        $page__count = floor($products / $pagesPerTime); 
+                        $page__count = floor($products / $pagesPerTime)+1; 
                         
                         function getInfo($sqlText){ 
                             $pagesPerTime = 20;
@@ -72,6 +83,7 @@ require "header.php";
                             while($content = mysqli_fetch_assoc($sqlText)){
                                 
                                 if($i >= (int)$page*$pagesPerTime && $i <= ((int)$page+1)*$pagesPerTime){
+                                    
                                     echo "<tr>";
                                     echo "<td class='td'>{$i}</td>";
                                     if (strlen($content['date']) > 1){
@@ -80,11 +92,12 @@ require "header.php";
                                     if (strlen($content['book__name']) > 1){
                                         echo "<td class='td'>{$content['book__name']}</td>";   
                                     }
-                                    echo "<td class='tdUnActive'><a href='adminEdit.php?bookId={$i}' class='btn editBtn'><img src='../images/edit.png' alt='Редактировать'></a><a href='#' class='btn delBtn'><img src='../images/del.png' alt='Удалить'></a></td>";
+                                    echo "<td class='tdUnActive'><a href='adminEdit.php?bookId={$content['id']}' class='btn editBtn'><img src='../images/edit.png' alt='Редактировать'></a><a href='?bookId={$content['id']}' class='btn delBtn'><img src='../images/del.png' alt='Удалить'></a></td>";
                                     echo "</tr>";  
                                     
                                 }
                                 $i++;
+                                $j++;
                                 $page__counter++;
                                 
                             }
@@ -93,6 +106,10 @@ require "header.php";
                             
                     ?>
             </table>
+        <div class="addBook">
+            <?php $count = mysqli_num_rows($sql) + 1 ?>
+            <a href="adminAdd.php?bookId=<?=$count?>" >Добавить книгу</a>
+        </div>
 
     </div>
     <div class="navigation__menu">
