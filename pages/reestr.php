@@ -341,7 +341,7 @@ $pathSomewhere = "../";
                                                 </div> 
                                             <?php endif;?>
 
-                                            <?php if (strlen(strip_tags($content['format'])) > 1 && strlen(strip_tags($content['format']) > 1)):?>
+                                            <?php if (strlen(strip_tags($content['format'])) > 1 && strlen(strip_tags($content['size']) > 1)):?>
                                                     <div class="field format">Данные о файле: <span class="value">Формат: <?=strip_tags($content['format'])?>, Размер: <?=strip_tags($content['size'])?></div> <!--Тип файла-->
                                             <?php endif;?>
 
