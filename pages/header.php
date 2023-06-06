@@ -116,7 +116,7 @@ session_start();
                                 <a href="<?php echo $pathToPages . "/e-resources.php"?>">Информационные ресурсы</a>
                             </li>
                             <li class="dropdown__item">
-                                <a href="<?php echo $pathToPages . "/reestr.php"?>">Реестр новых поступлений</a>
+                                <a href="<?php echo $pathToPages . "/reestr.php?page-0"?>">Реестр новых поступлений</a>
                             </li>
                             <li class="dropdown__item">
                                 <a href="<?php echo $pathToPages . "/moreResources.php"?>">Ресурсы, направленные на расширение сферы применения казахского языка по рекомендации Министерства образования и науки Республики Казахстан</a>

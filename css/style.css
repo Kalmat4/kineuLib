@@ -395,6 +395,7 @@ table{
 }
 .btnSend:hover{
     background-color: var(--fontColor); 
+    color: #fff;
     cursor: pointer;
 }
 .social{
