@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Июн 07 2023 г., 05:53
+-- Время создания: Июн 07 2023 г., 07:16
 -- Версия сервера: 8.0.30
 -- Версия PHP: 7.2.34
 
@@ -297,7 +297,7 @@ INSERT INTO `materials` (`id`, `date`, `book__name`, `author`, `co_author`, `izd
 (11, '2011-12-06', 'Электроника, автоматика, телемеханика на железнодорожном транспорте', 'Исенова О.Р', NULL, NULL, NULL, 'Костанайский инженерно-педагогический университет\r\nКостанай 2011', 'КИнЭУ, ТиС, Костанай, 2011', '.rar', '0 Мб', NULL, NULL, NULL, NULL, 2, 6, NULL, 'files/uploads/elektronika-avt-telemekh-na-zhd-transporte115213.rar', 1597),
 (12, '2011-12-06', 'Основы технической эксплуатации транспортной техники', 'Кухарь В.С', NULL, NULL, NULL, 'Костанайский инженерно-педагогический университет\r\nКостанай 2010', NULL, '.rar', '0 Мб', NULL, NULL, NULL, NULL, NULL, 6, NULL, 'files/uploads/osnovy-tekh-ekspluat-t-t133445.rar', 1443),
 (13, '2011-12-06', 'Основы технологии производства и ремонта транспортной техники', 'Кухарь В.С', NULL, NULL, NULL, 'Костанайский инженерно-педагогический университет\r\nКостанай 2011', NULL, '.rar', '0 Мб', NULL, NULL, NULL, NULL, NULL, 6, NULL, 'files/uploads/osnovy-tekhnologii-proizvodstva-i-remonta-t-t133748.rar', 1240),
-(14, '2016-12-21', '   Основы стандартизации, метрологии, сертификации', 'Яблонский, О.П.', NULL, NULL, NULL, '', NULL, '.pdf', '0 Мб', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'files/downloads/2016-12/1482294590_902.pdf', 1),
+(14, '2016-12-21', 'Основы стандартизации, метрологии, сертификации', 'Яблонский, О.П.', NULL, NULL, NULL, '', NULL, '.pdf', '0 Мб', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'files/downloads/2016-12/1482294590_902.pdf', 1),
 (15, '2011-12-06', 'Управление персоналом', 'Утемисова А. А.', NULL, NULL, NULL, 'Костанайский инженерно-педагогический университет\r\nКостанай 2010', NULL, '.rar', '0 Мб', NULL, NULL, NULL, NULL, NULL, 6, NULL, 'files/uploads/upravlenie-personalom134412.rar', 1517),
 (16, '2011-12-06', 'Грузоведение', 'Утемисова А. А', NULL, NULL, NULL, 'Костанайский инженерно-педагогический университет Костанай 2010', NULL, '.rar', '0 Мб', NULL, NULL, NULL, NULL, NULL, 6, NULL, 'files/uploads/gruzovedenie134623.rar', 1125),
 (17, '2011-12-06', 'Основы агротехнического сервиса', 'Чурсинов М.В', NULL, NULL, NULL, ' Костанайский инженерно-педагогический университет\r\nКостанай 2010', NULL, '.rar', '0 Мб', NULL, NULL, NULL, NULL, NULL, 6, NULL, 'files/uploads/osnovy-agrotekhnicheskogo-servisa134901.rar', 1258),
