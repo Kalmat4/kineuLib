@@ -1143,3 +1143,58 @@ label{
     background-color: var(--actualBackgroundColor);
 }
 /*ПАНЕЛЬ АДМИНИСТРАТОРА. КОНЕЦ*/
+
+
+/*МУЛЬТИЯЗЫЧИЕ*/
+    
+.language__img:hover,
+.language__img_active {
+    opacity: 1;
+}
+
+.language__img {
+    cursor: pointer;
+    opacity: .5;
+    margin: 0.1rem;
+    width: 2rem;
+}
+.language {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 2rem;
+    left: 2rem;
+    user-select: none;
+}
+.language__toggle{
+    display: none;
+    flex-direction: row;
+    background-color: var(--backgroundColor);
+    justify-content: center;
+    padding: 0 1rem 1rem 1rem;
+}
+.dropdown_lang{
+    background-color: var(--backgroundColor);
+    color: #fff;
+    padding: 1rem;
+    display: flex;
+}
+.dropDownImg{
+    width: 1rem;
+    margin-left: 0.5rem;
+}
+.dropdown_lang:hover{
+    cursor: pointer;
+    color: #5f9ea0;
+}
+.page_fix {
+    top: 0 !important;
+    position: static !important;
+    
+    min-height: 100vh;
+}
+.skiptranslate {
+    display: none !important;
+}
+
+/*МУЛЬТИЯЗЫЧИЕ*/
