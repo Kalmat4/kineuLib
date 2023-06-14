@@ -272,7 +272,7 @@ button{
 }
 .missionList > li{
     list-style-type: disc;
-    font-size: 1    rem;
+    font-size: 1.5rem;
     margin: 1rem;
 }
 .missionList{
@@ -414,6 +414,11 @@ table{
     min-height: .01%;
     overflow-x: auto;
     
+}
+.differentTable-wrap > table{
+    margin: 0;
+    display: flex;
+    justify-content: center;
 }
 .bi{
     width: 1.5rem;
@@ -1141,6 +1146,34 @@ label{
     border: 1px solid var(--backgroundColor);
     color:var(--fontColor);
     background-color: var(--actualBackgroundColor);
+}
+.searchBox{
+    display: flex;
+    justify-content: center;
+    margin: 2rem 0;
+}
+.searchInput{
+    font-size: 1.2rem;
+    color: var(--backgroundColor);
+    padding: 0.5rem;
+    margin-right: 1rem;
+    border-color: var(--backgroundColor);
+    border-radius: 0.5rem;
+    width: 30rem;
+    border-width: 1px;
+}
+.searchInputBtn, .clearInputBtn{
+    background-color: transparent;
+    color: var(--backgroundColor);
+    border-radius: 0.5rem;
+    border: 1px solid var(--backgroundColor);
+    padding: 1rem;
+    margin-right: 1rem;
+}
+.searchInputBtn:hover, .clearInputBtn:hover{
+    cursor: pointer;
+    background-color: var(--backgroundColor);
+    color: var(--actualBackgroundColor);
 }
 /*ПАНЕЛЬ АДМИНИСТРАТОРА. КОНЕЦ*/
 

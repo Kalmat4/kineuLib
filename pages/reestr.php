@@ -29,12 +29,14 @@ $pathSomewhere = "../";
                     // error_reporting(0);
                         if(strlen($_SESSION['sql']) > 1){
                             if ($_SERVER['REQUEST_URI'] == '/pages/reestr.php?clear'){
-                                $request = "SELECT * FROM `materials`";
+                                $request = "SELECT * FROM `materials`  
+                                ORDER BY `materials`.`id`  DESC";
                             }else{
                                 $request = $_SESSION['sql'];   
                             }
                         } else { 
-                            $request = "SELECT * FROM `materials`";
+                            $request = "SELECT * FROM `materials`  
+                            ORDER BY `materials`.`id`  DESC";
                         }      
                         $isInputFilled = false;
 
@@ -167,7 +169,8 @@ $pathSomewhere = "../";
                             $_SESSION['sql'] = $request;
                             echo "<br/>" . $sortText . "<br/>";
                         }else{
-                            $sql = mysqli_query($link, "SELECT * FROM `materials`");
+                            $sql = mysqli_query($link, "SELECT * FROM `materials`  
+                            ORDER BY `materials`.`id`  DESC");
                         }
 
 
@@ -205,7 +208,7 @@ $pathSomewhere = "../";
                         
 
                         <?php
-                        $pagesPerTime = 5;
+                        $pagesPerTime = 10;
                         $page = ""; 
                         $queryStr = $_SERVER["QUERY_STRING"];
                                     
@@ -216,7 +219,7 @@ $pathSomewhere = "../";
                         $page__count = floor($products / $pagesPerTime); 
                         
                         function getInfo($sqlText){ 
-                            $pagesPerTime = 5;
+                            $pagesPerTime = 10;
                             $page = ""; 
                             $queryStr = $_SERVER["QUERY_STRING"];
                                         
@@ -464,7 +467,8 @@ $pathSomewhere = "../";
                 </form>
                 <?php
                     if (isset($_GET['clear'])){
-                        $_SESSION['sql'] = "SELECT * FROM `materials`";
+                        $_SESSION['sql'] = "SELECT * FROM `materials`  
+                        ORDER BY `materials`.`id`  DESC";
                     }
                 
                 ?>

@@ -27,8 +27,12 @@ while ($check = mysqli_fetch_assoc($sqlAuth)){
             <p class="simpleText">
                 Это панель администратора библиотеки Костанайского Инженерно-Экономического Университета им. М.Дулатова. Здесь вы можете редактировать данные в базе данных книг бибилиотеки.
             </p>
-        
-            <div class="table-wrap">
+            <form class="searchBox" method="POST">
+                <input type="text" name="search" class="searchInput" autocomplete='off' placeholder="Введите название книги">
+                <input type="submit" name="searchBtn" value="Поиск" class="searchInputBtn" method="POST">
+                <input type="submit" name="clearBtn" value="Очистить" class="clearInputBtn" method="POST">
+            </form>
+            <div class="differentTable-wrap">
                 <div class="msgdialog hiddendialog">
                     <h1>Вы уверены что хотите удалить одну запись?</h1>
                     <div class="msgbtns">
@@ -42,8 +46,18 @@ while ($check = mysqli_fetch_assoc($sqlAuth)){
                                 require 'connect.php';
                                 error_reporting(0);
                                 $link = $_SESSION['db'];
-                                $sql = mysqli_query($link, "SELECT * FROM `materials`");
-                                
+                                $search = $_POST['search'];
+                                if (strlen($search) > 0){
+                                    $request = "SELECT * FROM `materials` WHERE `book__name` LIKE '%$search%'";
+                                    
+                                }else{
+                                    $request = "SELECT * FROM `materials`";
+                                }
+                                $sql = mysqli_query($link, $request);
+
+                                if (mysqli_num_rows($sql) > 0){
+                                    echo "<p align='center'><b>Результаты поиска: По запросу <<$search>> найдено: " . mysqli_num_rows($sql) . " - результатов</b></p>";
+                                }
                                 echo "<th class='th'>ID</th>";
                                 echo "<th class='th'>Дата</th>";   
                                 echo "<th class='th'>Название книги</th>";   
