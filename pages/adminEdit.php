@@ -31,6 +31,8 @@ require "header.php";
         
         $date; 
         $book__name; 
+        $pub_year; 
+        $pages_count; 
         $author; 
         $co_author; 
         $izd;
@@ -56,7 +58,11 @@ require "header.php";
             <label for="date">Дата</label>
             <input type="text" name="date" value="<?=$contentAdmin['date'];?>" autocomplete="off" disabled>
             <label for="book__name">Название книги</label>
-            <input type="text" name="book__name" value="<?=$contentAdmin['book__name'];?>"  autocomplete="off">
+            <textarea name="book__name" class="textarea"><?=$contentAdmin['book__name'];?></textarea>
+            <label for="pub_year">Год публикации</label>
+            <input type="text" name="pub_year" value='<?=$contentAdmin['pub_year']?>'>
+            <label for="pages_count">Количество страниц</label>
+            <input type="text" name="pages_count" value='<?=$contentAdmin['pages_count']?>'>
             <label for="author">Автор</label>
             <input type="text" name="author" value="<?=$contentAdmin['author'];?>" autocomplete="off">
             <label for="co_author">Соавтор</label>
@@ -69,9 +75,9 @@ require "header.php";
                 <option value="">Выберите издание</option>
                     <?php 
                         $editSQL = mysqli_query($link, "SELECT * FROM `edition`");
-                        while ($contentEdit = mysqli_fetch_assoc($editSQL)){
-                            echo "<option value='{$contentEdit['id']}''>{$contentEdit['title']}</option>";
-                        }
+                        while ($contentIzd = mysqli_fetch_assoc($editSQL)){ ?>
+                            <option value='<?=$contentIzd['id']?>' <?php if ($contentAdmin['vid_izd_id'] == $contentIzd['id']) :?> selected="selected"  <?php endif; ?>> <?=$contentIzd['title']?></option>
+                        <?php } ?>
                     ?>
             </select>
 
@@ -95,13 +101,14 @@ require "header.php";
             
             <label for="rubric">Предметная рубрика</label>
             <select name="rubric">
-                <option value="">Выберите рубрику</option>
-                <?php 
-                    $rubikSQL = mysqli_query($link, "SELECT * FROM `rubric`");
-                    while ($contentRubrik = mysqli_fetch_assoc($rubikSQL)){
-                        echo "<option value='{$contentRubrik['id']}'>{$contentRubrik['title']}</option>";
-                    }
-                ?>
+                <option value="">Выберите рубрику: </option>
+                        <?php 
+                            $rubSQL = mysqli_query($link, "SELECT * FROM `rubric`");
+                                
+                            while ($contentRub = mysqli_fetch_assoc($rubSQL)){ ?>
+                                <option value='<?=$contentRub['id']?>' <?php if ($contentAdmin['rubric_id'] == $contentRub['id']) :?> selected="selected"  <?php endif; ?>> <?=$contentRub['title']?></option>
+                            <?php } ?>
+                        
             </select>
 
             <label for="faculty">Факультет</label>
@@ -110,10 +117,10 @@ require "header.php";
                         <?php 
                             $facultySQL = mysqli_query($link, "SELECT * FROM `faculty`");
                                 
-                            while ($contentFac = mysqli_fetch_assoc($facultySQL)){
-                                echo "<option value='{$contentFac['id']}'>{$contentFac['title']}</option>";
-                            }
-                        ?>
+                            while ($contentFac = mysqli_fetch_assoc($facultySQL)){ ?>
+                                <option value='<?=$contentFac['id']?>' <?php if ($contentAdmin['faculty_id'] == $contentFac['id']) :?> selected="selected"  <?php endif; ?>> <?=$contentFac['title']?></option>
+                            <?php } ?>
+                        
             </select>
 
             <label for="department">Кафедра</label>
@@ -122,10 +129,10 @@ require "header.php";
                         <?php 
                             $departmentSQL = mysqli_query($link, "SELECT * FROM `department`");
                                 
-                            while ($contentDep = mysqli_fetch_assoc($departmentSQL)){
-                                echo "<option value='{$contentDep['id']}'>{$contentDep['title']}</option>";
-                            }
-                        ?>
+                            while ($contentDep = mysqli_fetch_assoc($departmentSQL)){ ?>
+                                <option value='<?=$contentDep['id']?>' <?php if ($contentAdmin['department_id'] == $contentDep['id']) :?> selected="selected"  <?php endif; ?>> <?=$contentDep['title']?></option>
+                            <?php } ?>
+                        
             </select>
 
             <label for="spec">Специальность</label>
@@ -133,10 +140,10 @@ require "header.php";
                 <option value="">Выберите специальность</option>
                     <?php 
                         $specSQL = mysqli_query($link, "SELECT * FROM `spec`");
-                        while ($contentSpec = mysqli_fetch_assoc($specSQL)){
-                            echo "<option value='{$contentSpec['id']}'>{$contentSpec['title']}</option>";
-                        }
-                    ?>
+
+                        while ($contentSpec = mysqli_fetch_assoc($specSQL)){ ?>
+                            <option value='<?=$contentSpec['id']?>' <?php if ($contentAdmin['spec_id'] == $contentSpec['id']) :?> selected="selected"  <?php endif; ?>> <?=$contentSpec['title']?></option>
+                        <?php } ?>
             </select>
 
             
@@ -144,7 +151,7 @@ require "header.php";
 
 
             <label for="link">Ссылка на файл</label>
-            <input type="text" name="link" value="<?=$contentAdmin['link'];?>" autocomplete="off">
+            <input type="text" name="link" value="<?=$contentAdmin['link'];?>" autocomplete="off" >
             <label for="downloads">Количество скачиваний</label>
             <input type="text" name="downloads" value="<?=$contentAdmin['downloads'];?>" autocomplete="off">
 
@@ -153,7 +160,13 @@ require "header.php";
     </form>
     <?php
         if (strlen($_POST['book__name']) > 1){
-            $book__name = "`book__name` = '" . $_POST['book__name'] . "', ";
+            $book__name = "`book__name` = '" . kaztrans($_POST['book__name']) . "', ";
+        }
+        if (strlen($_POST['pub_year']) > 1){
+            $pub_year = "`pub_year` = '" . $_POST['pub_year'] . "', ";
+        }
+        if (strlen($_POST['pages_count']) > 1){
+            $pages_count = "`pages_count` = '" . $_POST['pages_count'] . "', ";
         }
         if (strlen($_POST['author']) > 1){
             $author = "`author` = '" . $_POST['author'] . "', ";
@@ -166,9 +179,10 @@ require "header.php";
         }
         if (strlen($_POST['edition']) >= 1){
             $vid_izd = "`vid_izd_id` = '" . $_POST['edition'] . "', ";
+            echo $vid_izd . "<br>";
         }
         if (strlen($_POST['description']) > 1){
-            $description = "`description` = '" . $_POST['description'] . "', ";
+            $description = "`description` = '" . kaztrans($_POST['description']) . "', ";
         }
         if (strlen($_POST['keyWords']) > 1){
             $keyWords = "`keyWords` = '" . $_POST['keyWords'] . "', ";
@@ -190,6 +204,7 @@ require "header.php";
         }
         if (strlen($_POST['rubric']) >= 1){
             $rubric = "`rubric_id` = '" . $_POST['rubric'] . "', ";
+            echo $rubric . "<br>";
         }
         if (strlen($_POST['faculty']) >= 1){
             $faculty = "`faculty_id` = '" . $_POST['faculty'] . "', ";
@@ -207,13 +222,36 @@ require "header.php";
             $downloads = "`downloads` = '" . $_POST['downloads'] . "', ";
         }
 
+
+        function kaztrans($str){
+            $alph = array(
+                /*--*/
+                "ә" => "&#1241;", "і" => "і", "ң" => "&#1187;", "ғ" => "&#1171;", "ү" => "&#1199;", "ұ" => "&#1201;",
+                "қ" => "&#1179;", "ө" => "&#1257;", "һ" => "&#1211;",
+                /*--*/
+                "Ә" => "&#1240;", "І" => "І", "Ң" => "&#1186;", "Ғ" => "&#1170;", "Ү" => "&#1198;", "Ұ" => "&#1200;", "Қ" => "&#1178;",
+                "Ө" => "&#1256;", "Һ" => "&#1210;",
+                " " => "&nbsp;"
+            );
+            return strtr($str, $alph);
+        }
+
+        
+
         if (isset($_POST['confirmEditBtn'])){
-            $sqlUpdate = "UPDATE `materials` SET " . $book__name . $author . $co_author . $izd . $vid_izd . $description . $keyWords . $format . $size . $isbn . $bbk . $udk . $faculty . $department . $spec . $linkToDownload . $downloads . " WHERE `materials`.`id` = " . $id;
+            $sqlUpdate = "UPDATE `materials` SET " . $book__name . $pub_year . $pages_count . $author . $co_author . $izd . $vid_izd . $description . $keyWords . $format . $size . $isbn . $bbk . $udk . $rubric . $faculty . $department . $spec . $linkToDownload . $downloads . " WHERE `materials`.`id` = " . $id;
             $dotPoint = strpos($sqlUpdate,'WHERE');
             $sqlUpdate[$dotPoint-3] = " ";
             
             mysqli_query($link, $sqlUpdate);
-            echo "<script> location.href='adminForm.php?page-0'; </script>";
+            echo "<xmp>" . $sqlUpdate . "</xmp>";
+            if (mysqli_query($link, $sqlUpdate) == false){
+                echo 'false';
+            }else{
+                echo 'true';
+            }
+
+            // echo "<script> location.href='adminForm.php?page-0'; </script>";
 
         }
         

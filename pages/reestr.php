@@ -59,12 +59,24 @@ $pathSomewhere = "../";
                         $oneField;
                         $twoField;
 
+                        function kaztrans($str){
+                            $alph = array(
+                                /*--*/
+                                "ә" => "&#1241;", "і" => "і", "ң" => "&#1187;", "ғ" => "&#1171;", "ү" => "&#1199;", "ұ" => "&#1201;",
+                                "қ" => "&#1179;", "ө" => "&#1257;", "һ" => "&#1211;",
+                                /*--*/
+                                "Ә" => "&#1240;", "І" => "І", "Ң" => "&#1186;", "Ғ" => "&#1170;", "Ү" => "&#1198;", "Ұ" => "&#1200;", "Қ" => "&#1178;",
+                                "Ө" => "&#1256;", "Һ" => "&#1210;",
+                                " " => "&nbsp;"
+                            );
+                            return strtr($str, $alph);
+                        }
 
                         
                         for ($i=0;$i<count($fieldArray);$i++){
 
 
-                            $fieldContent = $_POST[$fieldArray[$i]];
+                            $fieldContent = kaztrans($_POST[$fieldArray[$i]]);
 
                             if (strlen($_POST[$fieldArray[$i]]) >= 1){
                                 if (strlen($firstFieldInput) >= 1){
@@ -240,6 +252,24 @@ $pathSomewhere = "../";
                                             <?php if (strlen(strip_tags($content['book__name'])) > 5):?>
                                                 <div class="field book__title"><span><?=strip_tags($content['book__name'])?></div> <!--Заголовок-->
                                             <?php endif;?>
+                                            
+                                            <?php 
+                                            $fullString = '';
+                                            if (strlen(strip_tags($content['pub_year'])) > 0) {
+                                                $fullString .= strip_tags($content['pub_year']) . "; ";
+                                            } 
+                                            if (strlen(strip_tags($content['pages_count'])) > 0) {
+                                                $fullString .= strip_tags($content['pages_count']) . " с; ";
+                                            }
+                                            if (strlen(strip_tags($content['format'])) > 0) {
+                                                $fullString .= strip_tags($content['format']) . "; ";
+                                            }
+                                            if (strlen(strip_tags($content['size'])) > 0) {
+                                                $fullString .= strip_tags($content['size']) . "; ";
+                                            }
+                                            if (strlen($fullString) > 0){?>
+                                                <div class="additionalInfo"><span><?=$fullString?></div> 
+                                            <?php } ?>
 
                                             <?php if (strlen(strip_tags($content['izd'])) > 5):?>
                                                 <div class="field edition">Издательство: <span class="value"><?=strip_tags($content['izd'])?></span></div> <!--Издательство-->
@@ -290,7 +320,8 @@ $pathSomewhere = "../";
                                             <?php if (strlen(strip_tags($content['udk'])) > 2):?>
                                                 <div class="field UDK">УДК: </span><span class="value"><?=strip_tags($content['udk'])?></span></div> <!--УДК-->
                                             <?php endif;?>   
-                                            
+
+
                                             <?php if (strlen(strip_tags($content['faculty_id'])) >= 1):?>
                                                 <div class="field faculty">Факультет: 
                                                     <span class="value">
@@ -344,9 +375,7 @@ $pathSomewhere = "../";
                                                 </div> 
                                             <?php endif;?>
 
-                                            <?php if (strlen(strip_tags($content['format'])) > 1 && strlen(strip_tags($content['size']) > 1)):?>
-                                                    <div class="field format">Данные о файле: <span class="value">Формат: <?=strip_tags($content['format'])?>, Размер: <?=strip_tags($content['size'])?></div> <!--Тип файла-->
-                                            <?php endif;?>
+                                            
 
                                             <?php if (strlen($_SESSION['authToken']) > 1){ ?>    
                                                 <?php if (strlen(strip_tags($content['link'])) > 5){

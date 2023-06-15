@@ -500,7 +500,10 @@ table{
     min-width: 100%;
     user-select: text;
 }
-
+.additionalInfo{
+    color: #6b6b6b;
+    font-style: italic;
+}
 .field{
     display: flex;
     flex-direction: row;
@@ -1174,6 +1177,11 @@ label{
     cursor: pointer;
     background-color: var(--backgroundColor);
     color: var(--actualBackgroundColor);
+}
+.centerStatusText{
+    font-size: 1.5rem;
+    text-align: center;
+    color: var(--backgroundColor);
 }
 /*ПАНЕЛЬ АДМИНИСТРАТОРА. КОНЕЦ*/
 

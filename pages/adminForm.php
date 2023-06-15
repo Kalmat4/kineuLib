@@ -46,18 +46,30 @@ while ($check = mysqli_fetch_assoc($sqlAuth)){
                                 require 'connect.php';
                                 error_reporting(0);
                                 $link = $_SESSION['db'];
-                                $search = $_POST['search'];
-                                if (strlen($search) > 0){
-                                    $request = "SELECT * FROM `materials` WHERE `book__name` LIKE '%$search%'";
-                                    
-                                }else{
-                                    $request = "SELECT * FROM `materials`";
-                                }
-                                $sql = mysqli_query($link, $request);
+                                if (!(isset($_POST['clearBtn']))){
+                                    $search = $_POST['search'];
+                                    if (strlen($_POST['search']) > 0){
+                                        $_SESSION['search'] = $_POST['search'];
+                                    }
+                                    $onTime = $_SESSION['search'];
+                                    if (strlen($_SESSION['search']) > 0){
+                                        $request = "SELECT * FROM `materials` WHERE `book__name` LIKE '%$onTime%' ORDER BY `materials`.`id` DESC";
+                                    }else{
+                                        $request = "SELECT * FROM `materials` ORDER BY `id` DESC";
+                                    }
+                                    $sql = mysqli_query($link, $request);
 
-                                if (mysqli_num_rows($sql) > 0){
-                                    echo "<p align='center'><b>Результаты поиска: По запросу <<$search>> найдено: " . mysqli_num_rows($sql) . " - результатов</b></p>";
-                                }
+                                    if (strlen($onTime) > 0){
+                                        echo "<p align='center'><b>Результаты поиска: По запросу <<$onTime>> найдено: " . mysqli_num_rows($sql) . " - результатов</b></p>";
+                                    }
+                                }else{
+                                    $_SESSION['search'] = '';
+                                    $search = '';
+                                    $request = "SELECT * FROM `materials` ORDER BY `id` DESC";
+                                    $sql = mysqli_query($link, $request);
+                                }   
+
+
                                 echo "<th class='th'>ID</th>";
                                 echo "<th class='th'>Дата</th>";   
                                 echo "<th class='th'>Название книги</th>";   
