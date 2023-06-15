@@ -143,7 +143,20 @@ $pathSomewhere = "../";
                         }
                         $sortText = 'Сортировка по полю <b>«';
                         if (strlen($secondFieldInput) >= 1 && strlen($firstFieldInput) >= 1){
-                            $request = "SELECT * FROM `materials` WHERE `" . $firstFieldName . "` LIKE '%" . $firstFieldInput . "%' AND `" . $secondFieldName . "` LIKE '%" . $secondFieldInput . "%'";
+
+                            if ($firstFieldName == 'vid_izd_id' || $firstFieldName == 'spec_id' || $firstFieldName == 'rubric_id'){
+                                $symb = '';
+                            }else{
+                                $symb = '%';
+                            }
+
+                            if ($secondFieldName == 'vid_izd_id' || $secondFieldName == 'spec_id' || $secondFieldName == 'rubric_id'){
+                                $symb2 = '';
+                            }else{
+                                $symb2 = '%';
+                            }
+
+                            $request = "SELECT * FROM `materials` WHERE `" . $firstFieldName . "` LIKE '" . $symb . $firstFieldInput  . $symb . "' AND `" .  $secondFieldName . "` LIKE '" . $symb2 . $secondFieldInput . $symb2 . "'";
                             $isInputFilled = true;
 
 
@@ -162,8 +175,14 @@ $pathSomewhere = "../";
                                 $secondFieldInput = getListItemName($ifSecondIntValue, $twoField); 
                             }
                             $sortText .= $firstClearName . "»</b> равное значению <b>«" . $firstFieldInput . "»</b> и по полю <b>«" . $secondClearName . "»</b> равное значению <b>«" . $secondFieldInput . "»</b>";
+    
                         }else if (strlen($firstFieldInput) >= 1){
-                            $request = "SELECT * FROM `materials` WHERE `" . $firstFieldName . "` LIKE '%" . $firstFieldInput . "%'";
+                            if ($firstFieldName == 'vid_izd_id' || $firstFieldName == 'spec_id' || $firstFieldName == 'rubric_id'){
+                                $symb = '';
+                            }else{
+                                $symb = '%';
+                            }
+                            $request = "SELECT * FROM `materials` WHERE `" . $firstFieldName . "` LIKE '" . $symb . $firstFieldInput . $symb ."'";
                             $isInputFilled = true;
                             $clearName = getClearName($firstFieldName);
 
@@ -173,6 +192,7 @@ $pathSomewhere = "../";
                                 $firstFieldInput = getListItemName($ifFirstIntValue, $oneField);  
                             }
                             $sortText .= $clearName . "»</b> равное значению <b>«" . $firstFieldInput . "»</b>";
+
                         }
 
 

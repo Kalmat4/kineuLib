@@ -179,7 +179,6 @@ require "header.php";
         }
         if (strlen($_POST['edition']) >= 1){
             $vid_izd = "`vid_izd_id` = '" . $_POST['edition'] . "', ";
-            echo $vid_izd . "<br>";
         }
         if (strlen($_POST['description']) > 1){
             $description = "`description` = '" . kaztrans($_POST['description']) . "', ";
@@ -204,7 +203,6 @@ require "header.php";
         }
         if (strlen($_POST['rubric']) >= 1){
             $rubric = "`rubric_id` = '" . $_POST['rubric'] . "', ";
-            echo $rubric . "<br>";
         }
         if (strlen($_POST['faculty']) >= 1){
             $faculty = "`faculty_id` = '" . $_POST['faculty'] . "', ";
@@ -244,11 +242,13 @@ require "header.php";
             $sqlUpdate[$dotPoint-3] = " ";
             
             mysqli_query($link, $sqlUpdate);
-            echo "<xmp>" . $sqlUpdate . "</xmp>";
             if (mysqli_query($link, $sqlUpdate) == false){
-                echo 'false';
+                echo $sqlUpdate . "<br>";
+                echo '<p class="centerStatusText">При обработке запроса произошла ошибка: ';
+                echo mysqli_error($link);
+                echo '</p>';
             }else{
-                echo 'true';
+                echo '<p class="centerStatusText">Успешно</p>';
             }
 
             // echo "<script> location.href='adminForm.php?page-0'; </script>";
