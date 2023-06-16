@@ -27,6 +27,9 @@ while ($check = mysqli_fetch_assoc($sqlAuth)){
             <p class="simpleText">
                 Это панель администратора библиотеки Костанайского Инженерно-Экономического Университета им. М.Дулатова. Здесь вы можете редактировать данные в базе данных книг бибилиотеки.
             </p>
+            <div class="redirectBtn">
+                <a href="stats.php">Статистика размещения</a>
+            </div>
             <form class="searchBox" method="POST">
                 <input type="text" name="search" class="searchInput" autocomplete='off' placeholder="Введите название книги">
                 <input type="submit" name="searchBtn" value="Поиск" class="searchInputBtn" method="POST">

@@ -299,7 +299,7 @@ require "header.php";
             $udk, $rubric, $faculty, $department, $spec, $linkToDownload,$downloads)";
 
             mysqli_query($link, $sqlUpdate);
-            // echo "<script> location.href='adminForm.php?page-0'; </script>";
+            echo "<script> location.href='adminForm.php?page-0'; </script>";
 
         }
 

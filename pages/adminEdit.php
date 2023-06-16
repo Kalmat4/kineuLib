@@ -250,7 +250,7 @@ require "header.php";
                 echo '<p class="centerStatusText">Успешно</p>';
             }
 
-            // echo "<script> location.href='adminForm.php?page-0'; </script>";
+            echo "<script> location.href='adminForm.php?page-0'; </script>";
 
         }
         
