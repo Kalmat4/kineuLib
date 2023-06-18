@@ -1194,12 +1194,28 @@ label{
     background-color: var(--backgroundColor);
     color: var(--actualBackgroundColor);
 }
+.statsTitle ~ .centerStatusText{
+    font-size: 1.5rem;
+    text-align: center;
+    color: var(--backgroundColor);
+    margin: 0;
+}
 .centerStatusText{
     font-size: 1.5rem;
     text-align: center;
     color: var(--backgroundColor);
 }
-
+.statsTable tr,.statsTable td,.statsTable th{
+    border: 1px solid black;
+    padding: 1rem;
+    border-color: var(--backgroundColor);
+    color: var(--backgroundColor);
+}
+.statsTable td:hover{
+    color: var(--actualBackgroundColor);
+    background-color: var(--backgroundColor);
+    cursor: pointer;
+}
 .stats{
     display: flex;
     flex-direction: column;

@@ -160,7 +160,7 @@ require "header.php";
     </form>
     <?php
         if (strlen($_POST['book__name']) > 1){
-            $book__name = "`book__name` = '" . kaztrans($_POST['book__name']) . "', ";
+            $book__name = "`book__name` = '" . $_POST['book__name'] . "', ";
         }
         if (strlen($_POST['pub_year']) > 1){
             $pub_year = "`pub_year` = '" . $_POST['pub_year'] . "', ";
@@ -181,7 +181,7 @@ require "header.php";
             $vid_izd = "`vid_izd_id` = '" . $_POST['edition'] . "', ";
         }
         if (strlen($_POST['description']) > 1){
-            $description = "`description` = '" . kaztrans($_POST['description']) . "', ";
+            $description = "`description` = '" . $_POST['description'] . "', ";
         }
         if (strlen($_POST['keyWords']) > 1){
             $keyWords = "`keyWords` = '" . $_POST['keyWords'] . "', ";
@@ -221,19 +221,6 @@ require "header.php";
         }
 
 
-        function kaztrans($str){
-            $alph = array(
-                /*--*/
-                "ә" => "&#1241;", "і" => "і", "ң" => "&#1187;", "ғ" => "&#1171;", "ү" => "&#1199;", "ұ" => "&#1201;",
-                "қ" => "&#1179;", "ө" => "&#1257;", "һ" => "&#1211;",
-                /*--*/
-                "Ә" => "&#1240;", "І" => "І", "Ң" => "&#1186;", "Ғ" => "&#1170;", "Ү" => "&#1198;", "Ұ" => "&#1200;", "Қ" => "&#1178;",
-                "Ө" => "&#1256;", "Һ" => "&#1210;"
-            );
-            return strtr($str, $alph);
-        }
-
-        
 
         if (isset($_POST['confirmEditBtn'])){
             $sqlUpdate = "UPDATE `materials` SET " . $book__name . $pub_year . $pages_count . $author . $co_author . $izd . $vid_izd . $description . $keyWords . $format . $size . $isbn . $bbk . $udk . $rubric . $faculty . $department . $spec . $linkToDownload . $downloads . " WHERE `materials`.`id` = " . $id;
