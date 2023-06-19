@@ -59,7 +59,7 @@ for ($i=0;$i<=count($postArray);$i++){
             $sql = "SELECT d.title, COUNT(*) as count 
             FROM materials m
             INNER JOIN " . $dataTableName . " d ON m." . $postName . " = d.id
-            GROUP BY m." . $postName;
+            GROUP BY m." . $postName . " ORDER BY `count` DESC";
             $postName = 'title';
         }
 
