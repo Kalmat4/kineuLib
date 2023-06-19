@@ -1242,6 +1242,10 @@ label{
     color: var(--backgroundColor) !important;
     text-align: center;
 }
+.statsChart{
+    width: 50%;
+    margin: 2rem auto;
+}
 /*ПАНЕЛЬ АДМИНИСТРАТОРА. КОНЕЦ*/
 
 

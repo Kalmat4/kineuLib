@@ -32,7 +32,7 @@ $postArray = [
 ];
 
 $selectedPost = '';
-
+var_dump($_POST);
 for ($i=0;$i<=count($postArray);$i++){
     if (strlen($_POST[$postArray[$i]]) > 0){
         $selectedPost = $postArray[$i];
@@ -71,21 +71,39 @@ for ($i=0;$i<=count($postArray);$i++){
                     <th><?=$_POST[$selectedPost]?></th>
                     <th>Количество книг</th>
                 </tr>
-            <?php
-            // Вывод результатов
-            while ($row = $result->fetch_assoc()) {
-                if (strlen($row[$postName]) > 0){?>
-                    <tr>
-                        <td>
-                            <?=$row[$postName]?>
-                        </td>
-                        <td>
-                            <?=$row['count']?>
-                        </td>
-                    </tr>
-                <?php }
-            }
-            echo '</table>';
+                <?php
+                $postNameArray = array();
+                $countArray = array();
+                
+                $i = 1;
+                while ($row = $result->fetch_assoc()) {
+                    if ($i < 15){
+                        if (strlen($row[$postName]) > 0){?>
+                            <tr>
+                                <td>
+                                    <?=$row[$postName]?>
+                                    <?php $postNameArray[] = $row[$postName]; ?>
+                                </td>
+                                <td>
+                                    <?=$row['count']?>
+                                    <?php $countArray[] = $row['count']; ?>
+                                </td>
+                            </tr>
+                        <?php }
+                    }
+                    $i++;
+                }
+                ?>
+            </table>
+        <div class="statsChart">
+            <canvas responsive="true" id="myChart"></canvas>
+        </div>
+
+        <?php
+
+        json_encode($postNameArray);
+        json_encode($countArray);
+
         } else {
             echo "Нет данных о годах выпуска книг.";
         }
@@ -108,6 +126,33 @@ for ($i=0;$i<=count($postArray);$i++){
     }
 }
 ?>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+  const bar = document.getElementById('myChart');
+
+  const postNameArray = <?= json_encode($postNameArray) ?>;
+  const countArray = <?= json_encode($countArray) ?>;
+
+  new Chart(bar, {
+    type: 'bar',
+    data: {
+      labels: postNameArray,
+      datasets: [{
+        label: '',
+        data: countArray,
+        borderWidth: 1
+      }]
+    },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      }
+    },
+  });
+
+</script>
 </div>
 <?php
 
