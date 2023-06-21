@@ -398,3 +398,4 @@ function getLinkString(){
     // alert(inputFile.files[0]);
     inputLink.value = 'files/uploads/' + inputFile.value.replace('C:\\fakepath\\', '');
 }
+

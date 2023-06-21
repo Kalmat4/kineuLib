@@ -1205,11 +1205,20 @@ label{
     text-align: center;
     color: var(--backgroundColor);
 }
+.statsTable{
+    table-layout: fixed;
+    width: 130%;
+    margin: 0 auto;
+}
 .statsTable tr,.statsTable td,.statsTable th{
     border: 1px solid black;
     padding: 1rem;
     border-color: var(--backgroundColor);
     color: var(--backgroundColor);
+
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 .statsTable td:hover{
     color: var(--actualBackgroundColor);
@@ -1245,6 +1254,57 @@ label{
 .statsChart{
     width: 50%;
     margin: 2rem auto;
+}
+
+.controls{
+    display: flex;
+    flex-direction: column;
+    width: 60%;
+    margin: 2rem auto;
+}
+.controls > * > input{
+    margin: 0 1rem;
+}
+.controls > * > select,.controls > option{
+    padding: 0.1rem;
+}
+.controls > *{
+    margin:0.5rem 0;
+}
+.dateIzd > input{
+    width: 5rem;
+}
+.controls > * > *{
+    color: var(--backgroundColor);
+}
+.halfInput{
+    color: var(--backgroundColor);
+    padding: 0.1rem;
+}
+.createBtn{
+    background-color: var(--actualBackgroundColor);
+    border: 1px solid var(--backgroundColor);
+    padding: 1rem;
+    border-radius: 1rem;
+    color: var(--backgroundColor);
+    width: 20rem;
+    margin: 1rem auto;
+}
+.createBtn:hover{
+    background-color: var(--backgroundColor);
+    color: var(--actualBackgroundColor);
+    cursor: pointer;
+}
+.editions{
+    display: flex;
+    flex-direction: column;
+    font-size: 1.1rem;
+}
+.descriptStyle{
+    width: 100px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 /*ПАНЕЛЬ АДМИНИСТРАТОРА. КОНЕЦ*/
 

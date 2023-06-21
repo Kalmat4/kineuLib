@@ -14,151 +14,191 @@ require "header.php";
 <div class="content">
 
 
-<a href="stats.php" class="backBtn">Вернуться</a>
+<a href="adminForm.php" class="backBtn">Вернуться</a>
 
 <h1 align="center">Статистика размещения материала библиотеки</h1>
 <div class="simpleText">Выберите вариант сортировки, посмотрите на результат и скачайте в формате .xlsx (Excel документ)</div>
+<?php 
+
+
+?>
+<form class="controls" method="POST">
+    <div class="dateAdd">
+        <label for="">Дата добавления</label>
+        <span>от:</span><input type="date" class="halfInput" name="addStartDate" value='<?php if (isset($_POST['addStartDate'])){ echo $_POST['addStartDate'];}?>'><span>до:</span><input class="halfInput"  value='<?php if (isset($_POST['addEndDate'])){ echo $_POST['addEndDate'];}?>' type="date" name="addEndDate">
+    </div>
+    <div class="dateIzd">
+        <label for="">Дата издания</label>
+        <span>от:</span><input type="number" class="halfInput" value='<?php if (isset($_POST['izdStartDate'])){ echo $_POST['izdStartDate'];}?>' name="izdStartDate" min="0" max="2050"><span>до:</span><input class="halfInput" value='<?php if (isset($_POST['izdEndDate'])){ echo $_POST['izdEndDate'];}?>' min="0" max="2050" type="number" name="izdEndDate">
+    </div>
+    <div class="facultyField">
+        <label for="faculty">Факультет: </label>
+        <select name="faculty">
+            <option value="0">Выберите факультет</option>
+            <?php
+            
+            require 'connect.php';
+            $link = $_SESSION['db'];
+
+            $facultySQL = 'SELECT * FROM `faculty`';
+            
+            $facultyQuery = mysqli_query($link, $facultySQL);
+
+            while($facultyContent = mysqli_fetch_assoc($facultyQuery)){?>
+                <option value='<?=$facultyContent['id']?>'  <?php if ($_POST['faculty'] == $facultyContent['id']) :?> selected="selected"  <?php endif; ?>><?=$facultyContent['title']?></option>
+
+            <?php } ?>
+        </select>
+    </div>
+    <div class="departmentField">
+        <label for="department">Кафедра: </label>
+        <select name="department">
+        <option value="0">Выберите кафедру</option>
+            <?php
+
+            require 'connect.php';
+            $link = $_SESSION['db'];
+
+            $departmentSQL = 'SELECT * FROM `department`';
+
+            $departmentQuery = mysqli_query($link, $departmentSQL);
+
+            while($departmentContent = mysqli_fetch_assoc($departmentQuery)){?>
+                <option value='<?=$departmentContent['id']?>'   <?php if ($_POST['department'] == $departmentContent['id']) :?> selected="selected"  <?php endif; ?> ><?=$departmentContent['title']?></option>
+            <?php } ?>
+        </select>
+    </div>
+    <div class="specField">
+        <label for="spec">Образовательная программа: </label>
+        <select name="spec">
+        <option value="0">Выберите Образовательную программу</option>
+            <?php
+
+            require 'connect.php';
+            $link = $_SESSION['db'];
+
+            $specSQL = 'SELECT * FROM `spec`';
+
+            $specQuery = mysqli_query($link, $specSQL);
+
+            while($specContent = mysqli_fetch_assoc($specQuery)){?>
+                <option value='<?=$specContent['id']?>' <?php if ($_POST['spec'] == $specContent['id']) :?> selected="selected"  <?php endif; ?> ><?=$specContent['title']?></option>
+           <?php }
+
+            ?>
+        </select>
+    </div>
+
+    <div class="editions">
+        <?php
+
+            require 'connect.php';
+            $link = $_SESSION['db'];
+
+            $editionSQL = 'SELECT * FROM `edition`';
+
+            $editionQuery = mysqli_query($link, $editionSQL);
+
+            $checkboxName = 'check';
+            
+            $j = 0;
+            
+            while($editionContent = mysqli_fetch_assoc($editionQuery)){
+                $j++;
+                $checkboxName = 'check' . $j;
+                ?>
+    
+            <div class="checkBlock">
+                <input type="checkbox" name="<?=$checkboxName?>" <?php if ($_POST[$checkboxName] == 'on'):?> checked <?php endif; ?>>
+                <label for="<?=$checkboxName?>"><?=$editionContent['title']?></label>
+            </div>
+            
+            <?php
+            }
+        ?>
+        
+    </div>
+
+    <input type="submit" name="createReport" class="createBtn" value="Сформировать отчёт">
+    <input type="submit" name="clear" class="createBtn" value="Сбросить">
+    <input type="submit" name="createExcel" class="createBtn" value="Экспортировать отчёт в Excel">
+
+</form>
+
+<div class="fieldTable">
+    <table class="statsTable">
+        <tr>
+            <?php
+            $columnNameArray = array();
+
+            $mainSQL = "SELECT COLUMN_NAME 
+            FROM INFORMATION_SCHEMA.COLUMNS 
+            WHERE TABLE_NAME = 'materials'";
+
+            $query = mysqli_query($link, $mainSQL);
+
+            while ($queryContent = mysqli_fetch_assoc($query)){
+                if ($queryContent['COLUMN_NAME'] == 'description'){
+                    echo "<th class='descriptStyle'>" . $queryContent['COLUMN_NAME'] . "</th>";
+                    $columnNameArray[] = $queryContent['COLUMN_NAME'];
+                }else{
+                    echo "<th>" . $queryContent['COLUMN_NAME'] . "</th>";
+                    $columnNameArray[] = $queryContent['COLUMN_NAME'];
+                }
+            }
+            ?>
+        </tr>
+        <?php
+            $k = 0;
+            $iteratorWhile = 0;
+            $mainSQL = "SELECT * FROM `materials`";
+            $query = mysqli_query($link, $mainSQL);
+            while ($queryContent = mysqli_fetch_assoc($query)){
+                if ($iteratorWhile < 100){
+                    echo "<tr>";
+                    $k = 0;
+                    for ($a = 0; $a<=21; $a++){ 
+                        if ($columnNameArray[$k] == 'description'){
+                            echo "<td class='descriptStyle'>" . $queryContent[$columnNameArray[$k]] . "</td>";
+                            $k++;
+                        }else{
+                            echo "<td>" . $queryContent[$columnNameArray[$k]] . "</td>";
+                            $k++;
+                        }
+                    }
+                    echo "</tr>";
+                    $iteratorWhile++;
+                }
+                    
+            }
+
+            
+            ?>
+    </table>
+</div>
+
 
 
 <?php
-$postArray = [
-    'pub_year',
-    'date',
-    'author',
-    'faculty_id',
-    'spec_id',
-    'vid_izd_id',
-    'department_id'
-];
-
-$selectedPost = '';
-var_dump($_POST);
-for ($i=0;$i<=count($postArray);$i++){
-    if (strlen($_POST[$postArray[$i]]) > 0){
-        $selectedPost = $postArray[$i];
-        $request = 'SELECT `' . $selectedPost . '` FROM `materials`'; 
-        echo '<h1 class="statsTitle">' .  $_POST[$selectedPost] . '</h1>';
-        
-        $postName = $postArray[$i];
-        $postValue = $_POST[$postArray[$i]];
-
-        require 'connect.php';
-        $link = $_SESSION['db'];
-
-        if ($i < 3){
-            $sql = "SELECT " . $postName . ", COUNT(*) as count 
-            FROM materials GROUP BY " . $postName . " 
-            ORDER BY `count` DESC";
-        }else{
-            $dataTableName;
-            if ($postName != 'vid_izd_id'){
-                $dataTableName = str_replace('_id', '', $postName);
-            }else{
-                $dataTableName = 'edition';
-            }
-            $sql = "SELECT d.title, COUNT(*) as count 
-            FROM materials m
-            INNER JOIN " . $dataTableName . " d ON m." . $postName . " = d.id
-            GROUP BY m." . $postName . " ORDER BY `count` DESC";
-            $postName = 'title';
-        }
-
-        $result = mysqli_query($link, $sql);
-
-        if (mysqli_num_rows($result) > 0) {?>
-            <table class="statsTable">
-                <tr>
-                    <th><?=$_POST[$selectedPost]?></th>
-                    <th>Количество книг</th>
-                </tr>
-                <?php
-                $postNameArray = array();
-                $countArray = array();
-                
-                $i = 1;
-                while ($row = $result->fetch_assoc()) {
-                    if ($i < 15){
-                        if (strlen($row[$postName]) > 0){?>
-                            <tr>
-                                <td>
-                                    <?=$row[$postName]?>
-                                    <?php $postNameArray[] = $row[$postName]; ?>
-                                </td>
-                                <td>
-                                    <?=$row['count']?>
-                                    <?php $countArray[] = $row['count']; ?>
-                                </td>
-                            </tr>
-                        <?php }
-                    }
-                    $i++;
-                }
-                ?>
-            </table>
-        <div class="statsChart">
-            <canvas responsive="true" id="myChart"></canvas>
-        </div>
-
-        <?php
-
-        json_encode($postNameArray);
-        json_encode($countArray);
-
-        } else {
-            echo "Нет данных о годах выпуска книг.";
-        }
 
 
-        ?>
-
-        
-    <?php }else if ($i == count($postArray) && strlen($selectedPost) == 0){?>
-        <form class="stats" method="POST">
-            <input class="select pub_year" type="submit" method="POST" name="pub_year" value="Год публикации"/>
-            <input class="select date" type="submit" method="POST" name="date" value="Дата загрузки"/>
-            <input class="select author" type="submit" method="POST" name="author" value="Автор"/>
-            <input class="select faculty" type="submit" method="POST" name="faculty_id" value="Факультет"/>
-            <input class="select spec" type="submit" method="POST" name="spec_id" value="Образовательная программа"/>
-            <input class="select edition" type="submit" method="POST" name="vid_izd_id" value="Вид издания"/>
-            <input class="select department" type="submit" method="POST" name="department_id" value="Кафедра"/>
-        </form>
-    <?php    
+if (isset($_POST['createReport'])){
+    if ($_POST['addStartDate'] > $_POST['addEndDate']){
+        echo '<p class="status"> Ошибка! В поле дата добавления, начальная дата больше конечной даты</p><br>';
     }
+    if ($_POST['izdStartDate'] > $_POST['izdEndDate']){
+        echo '<p class="status"> Ошибка! В поле дата издания, начальная дата больше конечной даты</p><br>';
+    }
+}else if (isset($_POST['clear'])){
+    echo '<script>window.location.href = "stats.php";</script>';
 }
+
 ?>
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script>
-  const bar = document.getElementById('myChart');
-
-  const postNameArray = <?= json_encode($postNameArray) ?>;
-  const countArray = <?= json_encode($countArray) ?>;
-
-  new Chart(bar, {
-    type: 'bar',
-    data: {
-      labels: postNameArray,
-      datasets: [{
-        label: '',
-        data: countArray,
-        borderWidth: 1
-      }]
-    },
-    options: {
-      scales: {
-        y: {
-          beginAtZero: true
-        }
-      }
-    },
-  });
-
-</script>
 </div>
 <?php
 
 require "footer.php";
 
 ?>
-
 
 
