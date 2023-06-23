@@ -1207,17 +1207,29 @@ label{
 }
 .statsTable{
     table-layout: fixed;
-    width: 130%;
+}
+.fieldTable{
+    width: 95%;
     margin: 0 auto;
+    overflow: auto;
+    
+}
+.fieldTable::-webkit-scrollbar {
+    width: 1rem;               /* ширина scrollbar */
+}
+.fieldTable::-webkit-scrollbar-track {
+    background: #fff;        /* цвет дорожки */
+}
+.fieldTable::-webkit-scrollbar-thumb {
+    background-color: var(--backgroundColor);    /* цвет плашки */
+    border-left: 0.1rem solid white;
+    border-right: 0.1rem solid white;
 }
 .statsTable tr,.statsTable td,.statsTable th{
     border: 1px solid black;
     padding: 1rem;
     border-color: var(--backgroundColor);
     color: var(--backgroundColor);
-
-    white-space: nowrap;
-    overflow: hidden;
     text-overflow: ellipsis;
 }
 .statsTable td:hover{
@@ -1301,8 +1313,6 @@ label{
     font-size: 1.1rem;
 }
 .descriptStyle{
-    width: 100px;
-    white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
 }

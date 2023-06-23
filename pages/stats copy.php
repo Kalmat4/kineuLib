@@ -128,121 +128,101 @@ require "header.php";
 <div class="fieldTable">
     <table class="statsTable">
         <tr>
-            <th>ID</th>
-            <th>Дата добавления</th>
-            <th>Название книги</th>
-            <th>Год публикации</th>
-            <th>Количество страниц</th>
-            <th>Автор</th>
-            <th>Соавтор</th>
-            <th>Издательство</th>
-            <th>Вид издания</th>
-            <th>Аннотация</th>
-            <th>Ключевые слова</th>
-            <th>Формат файла</th>
-            <th>Размер файла</th>
-            <th>ISBN</th>
-            <th>BBK</th>
-            <th>UDK</th>
-            <th>Рубрика</th>
-            <th>Факультет</th>
-            <th>Кафедра</th>
-            <th>Специальность</th>
-            <th>Ссылка на скачивание</th>
-            <th>Количество скачиваний</th>
-        </tr>
-        <?php      
+            <?php
+            $columnNameArray = array();
 
-            if (isset($_POST['createReport'])){
-                if ($_POST['addStartDate'] > $_POST['addEndDate']){
-                    echo '<p class="status"> Ошибка! В поле дата добавления, начальная дата больше конечной даты</p><br>';
+            $mainSQL = "SELECT COLUMN_NAME 
+            FROM INFORMATION_SCHEMA.COLUMNS 
+            WHERE TABLE_NAME = 'materials'";
+
+            $query = mysqli_query($link, $mainSQL);
+
+            while ($queryContent = mysqli_fetch_assoc($query)){
+                if ($queryContent['COLUMN_NAME'] == 'description'){
+                    echo "<th class='descriptStyle'>" . $queryContent['COLUMN_NAME'] . "</th>";
+                    $columnNameArray[] = $queryContent['COLUMN_NAME'];
+                }else{
+                    echo "<th>" . $queryContent['COLUMN_NAME'] . "</th>";
+                    $columnNameArray[] = $queryContent['COLUMN_NAME'];
                 }
-                // else{
-                //     $mainSQL = mysqli_query($link, "SELECT * FROM `materials` WHERE `date` >= " . $_POST['addStartDate'] . " and `date` <= " . $_POST['addEndDate']);
-                // }
-                if ($_POST['izdStartDate'] > $_POST['izdEndDate']){
-                    echo '<p class="status"> Ошибка! В поле дата издания, начальная дата больше конечной даты</p><br>';
-                }
-            }else if (isset($_POST['clear'])){
-                echo '<script>window.location.href = "stats.php";</script>';
             }
-
-            
+            ?>
+        </tr>
+        <?php
 
 
             $mainSQL = mysqli_query($link, "SELECT * FROM `materials`");
-            
             $pagesPerTime = 10;
-
             $page = ""; 
-
             $queryStr = $_SERVER["QUERY_STRING"];
-                                            
+                        
             $page = str_replace("page-", "", $queryStr);
-
+        
             $products = mysqli_num_rows($mainSQL);
-                                            
-            $page__count = floor($products / $pagesPerTime)+1; 
             
-            function getInfo($sqlText){ 
-
+            $page__count = floor($products / $pagesPerTime); 
+            
+            function getInfo($sqlText){
                 $pagesPerTime = 10;
-
                 $page = ""; 
-
                 $queryStr = $_SERVER["QUERY_STRING"];
-                                                
+                            
                 $page = str_replace("page-", "", $queryStr);
-                
+
                 $products = mysqli_num_rows($sqlText);
-                                                
+                         
                 $page__count = floor($products / $pagesPerTime); 
-
-                $i = 1;
-                while ($queryContent = mysqli_fetch_assoc($sqlText)){    
-                    
-                    if($i >= (int)$page*$pagesPerTime && $i <= ((int)$page+1)*$pagesPerTime){?>
-                        <tr>   
-                            <td> <?=$queryContent['id']?> </td>
-                            <td> <?=$queryContent['date']?> </td>
-                            <td> <?=$queryContent['book__name']?> </td>
-                            <td> <?=$queryContent['pub_year']?> </td>
-                            <td> <?=$queryContent['pages_count']?> </td>
-                            <td> <?=$queryContent['author']?> </td>
-                            <td> <?=$queryContent['co_author']?> </td>
-                            <td> <?=$queryContent['izd']?> </td>
-                            <td> <?=$queryContent['vid_izd_id']?> </td>
-                            <td class='descriptStyle'> <?=$queryContent['description']?> </td>
-                            <td> <?=$queryContent['keyWords']?> </td>
-                            <td> <?=$queryContent['format']?> </td>
-                            <td> <?=$queryContent['size']?> </td>
-                            <td> <?=$queryContent['isbn']?> </td>
-                            <td> <?=$queryContent['bbk']?> </td>
-                            <td> <?=$queryContent['udk']?> </td>
-                            <td> <?=$queryContent['rubric_id']?> </td>
-                            <td> <?=$queryContent['faculty_id']?> </td>
-                            <td> <?=$queryContent['department_id']?> </td>
-                            <td> <?=$queryContent['spec_id']?> </td>
-                            <td> <?=$queryContent['link']?> </td>
-                            <td> <?=$queryContent['downloads']?> </td>
-                            
-                        </tr> 
-                    <?php
-                    }
-                    $i++;
-                            
+                $k = 0;
+                while ($queryContent = mysqli_fetch_assoc($sqlText)){
+                        
+                        if($i >= (int)$page*$pagesPerTime && $i <= ((int)$page+1)*$pagesPerTime){             
+                            echo "<tr>";
+                            $k = 0;
+                            for ($a = 0; $a<=21; $a++){ 
+                                if ($columnNameArray[$k] == 'description'){
+                                    echo "<td class='descriptStyle'>" . $queryContent[$columnNameArray[$k]] . "</td>";
+                                    $k++;
+                                }else{
+                                    echo "<td>" . $queryContent[$columnNameArray[$k]] . "</td>";
+                                    $k++;
+                                }
+                            }
+                            echo "</tr>";
+                        
+                            $i++;
+                            $page__counter++;
+                        }
+                        
                 }
-            
+
             }
-
+            
             getInfo($mainSQL);
-
-            
-            
         ?>
     </table>
-
 </div>
+
+
+
+<?php
+
+
+if (isset($_POST['createReport'])){
+    if ($_POST['addStartDate'] > $_POST['addEndDate']){
+        echo '<p class="status"> Ошибка! В поле дата добавления, начальная дата больше конечной даты</p><br>';
+    }
+    if ($_POST['izdStartDate'] > $_POST['izdEndDate']){
+        echo '<p class="status"> Ошибка! В поле дата издания, начальная дата больше конечной даты</p><br>';
+    }
+}else if (isset($_POST['clear'])){
+    echo '<script>window.location.href = "stats.php";</script>';
+}
+
+?>
+
+
+
+
 <div class="navigation__menu">
                 
 
@@ -316,8 +296,8 @@ require "header.php";
                     </button>
                 </a>
                 <?php endif;?>
+        </div>
 </div>
-
 
 
 
