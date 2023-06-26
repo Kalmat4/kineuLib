@@ -1207,6 +1207,7 @@ label{
 }
 .statsTable{
     table-layout: fixed;
+    margin: 1rem 0;
 }
 .fieldTable{
     width: 95%;

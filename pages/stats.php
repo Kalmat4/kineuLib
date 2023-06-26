@@ -153,24 +153,123 @@ require "header.php";
         </tr>
         <?php      
 
+            $mainSQL;
+            $sortSql;
+
+            $addDate;
+            $izdDate;
+            $facultyData;
+            $departmentData;
+            $specData;
+            $editionData;
+            
             if (isset($_POST['createReport'])){
+
+
                 if ($_POST['addStartDate'] > $_POST['addEndDate']){
                     echo '<p class="status"> Ошибка! В поле дата добавления, начальная дата больше конечной даты</p><br>';
+                }else if( strlen($_POST['addStartDate']) > 0 && strlen($_POST['addEndDate']) > 0 ){
+                    $addDate = '`date` >= \'' . $_POST['addStartDate'] . '\' AND `date` <= \'' . $_POST['addEndDate'] . "'";
+                }else{
+                    $addDate = '';
                 }
-                // else{
-                //     $mainSQL = mysqli_query($link, "SELECT * FROM `materials` WHERE `date` >= " . $_POST['addStartDate'] . " and `date` <= " . $_POST['addEndDate']);
-                // }
+
+
                 if ($_POST['izdStartDate'] > $_POST['izdEndDate']){
                     echo '<p class="status"> Ошибка! В поле дата издания, начальная дата больше конечной даты</p><br>';
+                }else if( strlen($_POST['izdStartDate']) > 0 && strlen($_POST['izdEndDate']) > 0 ){
+                    $izdDate = '`pub_year` >= \'' . $_POST['izdStartDate'] . '\' AND `pub_year` <= \'' . $_POST['izdEndDate'] . "'";
+                    if (!(strlen($_POST['addStartDate']) > 0 && strlen($_POST['addEndDate']) > 0 )){
+                        $izdDelimeter = '';
+                    }else{
+                        $izdDelimeter = ' AND '; 
+                    }
+                }else{
+                    $izdDate = '';
+                    $izdDelimeter = '';
                 }
+
+                if ($_POST['faculty'] > 0){
+                    $facultyData = '`faculty_id` = ' . $_POST['faculty'];
+                    if (strlen($_POST['izdStartDate']) > 0 && strlen($_POST['izdEndDate']) > 0 ){
+                        $facDelimeter = ' AND ';
+                    }else{
+                        $facDelimeter = '';
+                    }
+                }else{
+                    $facultyData = '';
+                    $facDelimeter = '';
+                }
+
+                if ($_POST['department'] > 0){
+                    $departmentData = '`department_id` = ' . $_POST['department'];
+                    if ($_POST['faculty'] > 0){
+                        $depDelimeter = ' AND ';
+                    }else{
+                        $depDelimeter = '';
+                    }
+                }else{
+                    $departmentData = '';
+                    $depDelimeter = '';
+                }
+
+                if ($_POST['spec'] > 0){
+                    $specData = '`spec_id` = ' . $_POST['spec'];
+                    if ($_POST['department'] > 0){
+                        $specDelimeter = ' AND ';
+                    }else{
+                        $specDelimeter = '';
+                    }
+                }else{
+                    $specData = '';
+                    $specDelimeter = '';
+                }
+
+                $checkEdition = false;
+                $editionData = '`vid_izd_id` = ';
+                $b = 1;
+                for ($i=1;$i<=15;$i++){
+                    $postName = 'check' . $i;
+
+                    if ($_POST[$postName] == 'on'){
+                        $checkEdition = true;
+                        if ($_POST['spec'] > 0){
+                            $editionDelimeter = ' AND ';
+                        }else{
+                            $editionDelimeter = '';
+                        }
+                        if ($b > 1){
+                            $editionData .= ' or `vid_izd_id` = ';
+                        }
+                        $b++;
+                        $editionData .= $i;
+                    }
+                }
+                if ($checkEdition == false){
+                    $editionData = '';
+                }
+
+
+
+                $sortSql = 'SELECT * FROM `materials` WHERE ' . $addDate . $izdDelimeter . $izdDate . $facDelimeter . $facultyData . $depDelimeter . $departmentData . $specDelimeter . $specData . $editionDelimeter . $editionData;
+                if (strlen($sortSql) == 32){
+                    $sortSql = 'SELECT * FROM `materials`';
+                }
+                $_SESSION['sortSQL'] = $sortSql;
             }else if (isset($_POST['clear'])){
                 echo '<script>window.location.href = "stats.php";</script>';
+                $_SESSION['sortSQL'] = '';
             }
 
+
+            if (strlen($_SESSION['sortSQL']) > 1){
+                $mainSQL = mysqli_query($link, $_SESSION['sortSQL']);
+            }else{
+                $mainSQL = mysqli_query($link, 'SELECT * FROM `materials`');
+            }
+            $rowsCount = mysqli_num_rows($mainSQL);
             
-
-
-            $mainSQL = mysqli_query($link, "SELECT * FROM `materials`");
+            echo "<b>Найдено строк: " . $rowsCount . "</b>";
             
             $pagesPerTime = 10;
 
