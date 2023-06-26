@@ -259,6 +259,8 @@ require "header.php";
             }else if (isset($_POST['clear'])){
                 echo '<script>window.location.href = "stats.php";</script>';
                 $_SESSION['sortSQL'] = '';
+            }else if (isset($_POST['createExcel'])){
+                
             }
 
 
