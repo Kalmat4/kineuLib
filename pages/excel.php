@@ -4,18 +4,8 @@ require '../vendor/autoload.php';
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
-// Подключение к базе данных MySQL
-$servername = 'localhost';
-$username = 'root';
-$password = '';
-$dbname = 'kineu__test';
-
-$conn = mysqli_connect($servername, $username, $password, $dbname);
-if( !$conn ){	
-    echo 'Ошибка: <br/>';
-    echo mysqli_connect_error();
-    exit();
-}
+require 'connect.php';
+$conn = $_SESSION['db'];
 
 // Создание нового Excel документа
 $spreadsheet = new Spreadsheet();
