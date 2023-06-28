@@ -165,11 +165,18 @@ require "header.php";
             
             if (isset($_POST['createReport'])){
 
+                $addStatus = false;
+                $izdStatus = false;
+                $facStatus = false;
+                $depStatus = false;
+                $specStatus = false;
+                $editionStatus = false;
 
                 if ($_POST['addStartDate'] > $_POST['addEndDate']){
                     echo '<p class="status"> Ошибка! В поле дата добавления, начальная дата больше конечной даты</p><br>';
                 }else if( strlen($_POST['addStartDate']) > 0 && strlen($_POST['addEndDate']) > 0 ){
                     $addDate = '`date` >= \'' . $_POST['addStartDate'] . '\' AND `date` <= \'' . $_POST['addEndDate'] . "'";
+                    $addStatus = true;
                 }else{
                     $addDate = '';
                 }
@@ -179,10 +186,11 @@ require "header.php";
                     echo '<p class="status"> Ошибка! В поле дата издания, начальная дата больше конечной даты</p><br>';
                 }else if( strlen($_POST['izdStartDate']) > 0 && strlen($_POST['izdEndDate']) > 0 ){
                     $izdDate = '`pub_year` >= \'' . $_POST['izdStartDate'] . '\' AND `pub_year` <= \'' . $_POST['izdEndDate'] . "'";
-                    if (!(strlen($_POST['addStartDate']) > 0 && strlen($_POST['addEndDate']) > 0 )){
-                        $izdDelimeter = '';
-                    }else{
+                    $izdStatus = true;
+                    if ($addStatus){
                         $izdDelimeter = ' AND '; 
+                    }else{
+                        $izdDelimeter = '';
                     }
                 }else{
                     $izdDate = '';
@@ -191,7 +199,8 @@ require "header.php";
 
                 if ($_POST['faculty'] > 0){
                     $facultyData = '`faculty_id` = ' . $_POST['faculty'];
-                    if (strlen($_POST['izdStartDate']) > 0 && strlen($_POST['izdEndDate']) > 0 ){
+                    $facStatus = true;
+                    if ($addStatus || $izdStatus){
                         $facDelimeter = ' AND ';
                     }else{
                         $facDelimeter = '';
@@ -203,7 +212,8 @@ require "header.php";
 
                 if ($_POST['department'] > 0){
                     $departmentData = '`department_id` = ' . $_POST['department'];
-                    if ($_POST['faculty'] > 0){
+                    $depStatus = true;
+                    if ($addStatus || $izdStatus || $facStatus){
                         $depDelimeter = ' AND ';
                     }else{
                         $depDelimeter = '';
@@ -215,7 +225,8 @@ require "header.php";
 
                 if ($_POST['spec'] > 0){
                     $specData = '`spec_id` = ' . $_POST['spec'];
-                    if ($_POST['department'] > 0){
+                    $specStatus = true;
+                    if ($addStatus || $izdStatus || $facStatus || $depStatus){
                         $specDelimeter = ' AND ';
                     }else{
                         $specDelimeter = '';
@@ -225,15 +236,14 @@ require "header.php";
                     $specDelimeter = '';
                 }
 
-                $checkEdition = false;
                 $editionData = '`vid_izd_id` = ';
                 $b = 1;
                 for ($i=1;$i<=15;$i++){
                     $postName = 'check' . $i;
 
                     if ($_POST[$postName] == 'on'){
-                        $checkEdition = true;
-                        if ($_POST['spec'] > 0){
+                        $editionStatus = true;
+                        if ($addStatus || $izdStatus || $facStatus || $depStatus || $specStatus){
                             $editionDelimeter = ' AND ';
                         }else{
                             $editionDelimeter = '';
@@ -245,7 +255,7 @@ require "header.php";
                         $editionData .= $i;
                     }
                 }
-                if ($checkEdition == false){
+                if ($editionStatus == false){
                     $editionData = '';
                 }
 
@@ -256,186 +266,28 @@ require "header.php";
                     $sortSql = 'SELECT * FROM `materials`';
                 }
                 $_SESSION['sortSQL'] = $sortSql;
+                $_SESSION['sqlReport'] = $_SESSION['sortSQL'];
             }else if (isset($_POST['clear'])){
                 echo '<script>window.location.href = "stats.php";</script>';
                 $_SESSION['sortSQL'] = '';
+                $_SESSION['sqlReport'] = 'SELECT * FROM `materials`';
+            }else if (isset($_POST['createExcel'])){
+                if (strlen($_SESSION['sortSQL']) > 1){
+                    $_SESSION['sqlReport'] = $_SESSION['sortSQL'];
+                }else{
+                    $_SESSION['sqlReport'] = 'SELECT * FROM `materials`';
+                }
+                
+                echo '<script>window.location.href = "excel.php";</script>';
             }
-            // else if (isset($_POST['createExcel'])){
-            //     error_reporting(0);
-            //     require_once __DIR__ . '/Classes/PHPExcel.php';
-            //     require_once __DIR__ . '/Classes/PHPExcel/Writer/Excel2007.php';
-            //     require_once __DIR__ . '/Classes/PHPExcel/IOFactory.php';
-
-            //     $xls = new PHPExcel();
-            //     $xls->setActiveSheetIndex(0);
-            //     $sheet = $xls->getActiveSheet();
-            //     $sheet->setTitle('Название листа');
-
-            //     // Формат
-            //     $sheet->getPageSetup()->SetPaperSize(PHPExcel_Worksheet_PageSetup::PAPERSIZE_A4);
-                
-            //     // Ориентация
-            //     // ORIENTATION_PORTRAIT — книжная
-            //     // ORIENTATION_LANDSCAPE — альбомная
-            //     $sheet->getPageSetup()->setOrientation(PHPExcel_Worksheet_PageSetup::ORIENTATION_PORTRAIT);
-                
-            //     // Поля
-            //     $sheet->getPageMargins()->setTop(1);
-            //     $sheet->getPageMargins()->setRight(0.75);
-            //     $sheet->getPageMargins()->setLeft(0.75);
-            //     $sheet->getPageMargins()->setBottom(1);
-                
-            //     // Верхний колонтитул
-            //     $sheet->getHeaderFooter()->setOddHeader("Название листа");
-                
-            //     // Нижний колонтитул
-            //     $sheet->getHeaderFooter()->setOddFooter('&L&B Название листа &R Страница &P из &N');
-
-            //     //Заголовки
-            //     $sheet->setCellValue("A1", "ID");
-            //     $sheet->setCellValue("B1", "Дата добавления");
-            //     $sheet->setCellValue("C1", "Название книги");
-            //     $sheet->setCellValue("D1", "Год публикации");
-            //     $sheet->setCellValue("E1", "Количество страниц");
-            //     $sheet->setCellValue("F1", "Автор");
-            //     $sheet->setCellValue("G1", "Соавтор");
-            //     $sheet->setCellValue("H1", "Издательство");
-            //     $sheet->setCellValue("I1", "Вид издания");
-            //     $sheet->setCellValue("J1", "Аннотация");
-            //     $sheet->setCellValue("K1", "Ключевые слова");
-            //     $sheet->setCellValue("L1", "Формат файла");
-            //     $sheet->setCellValue("M1", "Размер файла");
-            //     $sheet->setCellValue("N1", "ISBN");
-            //     $sheet->setCellValue("O1", "BBK");
-            //     $sheet->setCellValue("P1", "UDK");
-            //     $sheet->setCellValue("Q1", "Рубрика");
-            //     $sheet->setCellValue("R1", "Факультет");
-            //     $sheet->setCellValue("S1", "Кафедра");
-            //     $sheet->setCellValue("T1", "Специальность");
-            //     $sheet->setCellValue("U1", "Ссылка на скачивание");
-            //     $sheet->setCellValue("V1", "Количество скачиваний");
-
-            //     //Стандартные размеры
-            //     $sheet->getColumnDimension("V")->setWidth(22);
-            //     $sheet->getColumnDimension("U")->setWidth(21);
-            //     $sheet->getColumnDimension("R")->setWidth(15);
-            //     $sheet->getColumnDimension("T")->setWidth(15);
-            //     $sheet->getColumnDimension("M")->setWidth(14);
-            //     $sheet->getColumnDimension("L")->setWidth(14);
-            //     $sheet->getColumnDimension("K")->setWidth(17);
-            //     $sheet->getColumnDimension("J")->setWidth(100);
-            //     $sheet->getColumnDimension("I")->setWidth(13);
-            //     $sheet->getColumnDimension("H")->setWidth(14);
-            //     $sheet->getColumnDimension("E")->setWidth(19);
-            //     $sheet->getColumnDimension("D")->setWidth(16);
-            //     $sheet->getColumnDimension("B")->setWidth(16);
-            //     $sheet->getColumnDimension("C")->setWidth(50);
-
-            //     //Жирный шрифт для заголовков
-            //     $sheet->getStyle("A1")->getFont()->setBold(true);
-            //     $sheet->getStyle("B1")->getFont()->setBold(true);
-            //     $sheet->getStyle("C1")->getFont()->setBold(true);
-            //     $sheet->getStyle("D1")->getFont()->setBold(true);
-            //     $sheet->getStyle("E1")->getFont()->setBold(true);
-            //     $sheet->getStyle("F1")->getFont()->setBold(true);
-            //     $sheet->getStyle("G1")->getFont()->setBold(true);
-            //     $sheet->getStyle("H1")->getFont()->setBold(true);
-            //     $sheet->getStyle("I1")->getFont()->setBold(true);
-            //     $sheet->getStyle("J1")->getFont()->setBold(true);
-            //     $sheet->getStyle("K1")->getFont()->setBold(true);
-            //     $sheet->getStyle("L1")->getFont()->setBold(true);
-            //     $sheet->getStyle("M1")->getFont()->setBold(true);
-            //     $sheet->getStyle("N1")->getFont()->setBold(true);
-            //     $sheet->getStyle("O1")->getFont()->setBold(true);
-            //     $sheet->getStyle("P1")->getFont()->setBold(true);
-            //     $sheet->getStyle("Q1")->getFont()->setBold(true);
-            //     $sheet->getStyle("R1")->getFont()->setBold(true);
-            //     $sheet->getStyle("S1")->getFont()->setBold(true);
-            //     $sheet->getStyle("T1")->getFont()->setBold(true);
-            //     $sheet->getStyle("U1")->getFont()->setBold(true);
-            //     $sheet->getStyle("V1")->getFont()->setBold(true);
-
-
-                
-            //     if (strlen($_SESSION['sortSQL']) > 1){
-            //         $mainSQL = mysqli_query($link, $_SESSION['sortSQL']);
-            //     }else{
-            //         $mainSQL = mysqli_query($link, 'SELECT * FROM `materials`');
-            //     }
-
-            //     $row = 1;
-
-            //     while ($queryContent = mysqli_fetch_assoc($mainSQL)){  
-            //         $row++;
-
-            //         $A = 'A' . $row;
-            //         $B = 'B' . $row;
-            //         $C = 'C' . $row;
-            //         $D = 'D' . $row;
-            //         $E = 'E' . $row;
-            //         $F = 'F' . $row;
-            //         $G = 'G' . $row;
-            //         $H = 'H' . $row;
-            //         $I = 'I' . $row;
-            //         $J = 'J' . $row;
-            //         $K = 'K' . $row;
-            //         $L = 'L' . $row;
-            //         $M = 'M' . $row;
-            //         $N = 'N' . $row;
-            //         $O = 'O' . $row;
-            //         $P = 'P' . $row;
-            //         $Q = 'Q' . $row;
-            //         $R = 'R' . $row;
-            //         $S = 'S' . $row;
-            //         $T = 'T' . $row;
-            //         $U = 'U' . $row;
-            //         $V = 'V' . $row;
-                    
-            //         $sheet->setCellValue($A, $queryContent['id']);
-            //         $sheet->setCellValue($B, $queryContent['date']);
-            //         $sheet->setCellValue($C, $queryContent['book__name']);
-            //         $sheet->setCellValue($D, $queryContent['pub_year']);
-            //         $sheet->setCellValue($E, $queryContent['pages_count']);
-            //         $sheet->setCellValue($F, $queryContent['author']);
-            //         $sheet->setCellValue($G, $queryContent['co_author']);
-            //         $sheet->setCellValue($H, $queryContent['izd']);
-            //         $sheet->setCellValue($I, $queryContent['vid_izd_id']);
-            //         $sheet->setCellValue($J, $queryContent['description']);
-            //         $sheet->setCellValue($K, $queryContent['keyWords']);
-            //         $sheet->setCellValue($L, $queryContent['format']);
-            //         $sheet->setCellValue($M, $queryContent['size']);
-            //         $sheet->setCellValue($N, $queryContent['isbn']);
-            //         $sheet->setCellValue($O, $queryContent['bbk']);
-            //         $sheet->setCellValue($P, $queryContent['udk']);
-            //         $sheet->setCellValue($Q, $queryContent['rubric_id']);
-            //         $sheet->setCellValue($R, $queryContent['faculty_id']);
-            //         $sheet->setCellValue($S, $queryContent['department_id']);
-            //         $sheet->setCellValue($T, $queryContent['spec_id']);
-            //         $sheet->setCellValue($U, $queryContent['link']);
-            //         $sheet->setCellValue($V, $queryContent['downloads']);
-              
-            //     }
-
-
-            //     $objWriter = new PHPExcel_Writer_Excel5($xls);
-
-            //     $folder = __DIR__ . '/Excel EXPORTS//';
-            //     $countFiles = count(scandir($folder))-1;
-            //     $fileName = date('Y-m-d') . '-' . $countFiles . '.xls';
-
-            //     $file_path = __DIR__ . '/Excel EXPORTS//' . date('Y-m-d') . '-' . $countFiles . '.xls';
-            //     $objWriter->save($file_path);
-
-                
-                
-            // }
+            
 
             if (strlen($_SESSION['sortSQL']) > 1){
                 $mainSQL = mysqli_query($link, $_SESSION['sortSQL']);
             }else{
                 $mainSQL = mysqli_query($link, 'SELECT * FROM `materials`');
             }
-
+            
             $rowsCount = mysqli_num_rows($mainSQL);
             
             echo "<b>Найдено строк: " . $rowsCount . "</b>";
